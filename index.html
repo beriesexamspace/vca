@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VCA — Examentraining</title>
+<style>
+  :root{
+    --bg:#f4f2ee; --bg2:#ebe8e2; --card:#ffffff; --ink:#1b232c; --muted:#5d6873;
+    --line:#e2ddd4; --accent:#0f6e6a; --accent-ink:#0b4f4c; --accent-soft:#dcefed;
+    --amber:#c9821f; --amber-soft:#f7ecd9;
+    --good:#1f8a4c; --good-soft:#e2f3e8; --bad:#c23b54; --bad-soft:#fbe5ea;
+    --shadow:0 1px 2px rgba(20,30,40,.06),0 6px 20px rgba(20,30,40,.06);
+    --r:14px;
+  }
+  html[data-theme="dark"]{
+    --bg:#11151a; --bg2:#161b22; --card:#1b222b; --ink:#e7ecf1; --muted:#9aa6b2;
+    --line:#2a323c; --accent:#3fb9b2; --accent-ink:#7fd6d0; --accent-soft:#163230;
+    --amber:#e0a64a; --amber-soft:#2e2515;
+    --good:#46c178; --good-soft:#16301f; --bad:#ef6b82; --bad-soft:#331620;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.serif{font-family:Georgia,"Iowan Old Style","Times New Roman",serif}
+  button{font-family:inherit;cursor:pointer}
+  .wrap{max-width:880px;margin:0 auto;padding:0 18px 80px}
+  header.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+  .topin{max-width:880px;margin:0 auto;padding:11px 18px;display:flex;align-items:center;gap:12px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.2px}
+  .logo{width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:Georgia,serif;font-weight:700;font-size:14px;flex:none}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.3px}
+  .spacer{flex:1}
+  .iconbtn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:7px 10px;font-size:13px;display:inline-flex;gap:6px;align-items:center}
+  .iconbtn:hover{border-color:var(--accent)}
+  nav.tabs{display:flex;gap:4px;overflow:auto;max-width:880px;margin:0 auto;padding:8px 14px 0}
+  nav.tabs button{border:none;background:none;color:var(--muted);padding:9px 13px;border-radius:9px 9px 0 0;font-size:14px;font-weight:600;white-space:nowrap;border-bottom:2px solid transparent}
+  nav.tabs button.on{color:var(--accent-ink);border-bottom-color:var(--accent)}
+  nav.tabs button:hover{color:var(--ink)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+  .pad{padding:18px}
+  .grid{display:grid;gap:14px}
+  @media(min-width:620px){.g2{grid-template-columns:1fr 1fr}}
+  .muted{color:var(--muted)}
+  .pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink)}
+  .pill.amber{background:var(--amber-soft);color:var(--amber)}
+  .pill.good{background:var(--good-soft);color:var(--good)} .pill.bad{background:var(--bad-soft);color:var(--bad)}
+  .hero{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:18px 0}
+  .count{flex:none;background:var(--accent);color:#fff;border-radius:var(--r);padding:14px 18px;text-align:center;min-width:120px}
+  .count b{font-family:Georgia,serif;font-size:30px;display:block;line-height:1}
+  .count span{font-size:12px;opacity:.9}
+  .herotext h1{margin:0 0 4px;font-size:24px}
+  .herotext p{margin:0;color:var(--muted)}
+  .mode{display:flex;flex-direction:column;text-align:left;width:100%;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:16px;gap:6px;box-shadow:var(--shadow);transition:.15s}
+  .mode:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .mode .em{font-size:22px}.mode b{font-size:16px}.mode small{color:var(--muted);font-size:13px}
+  .bar{height:8px;border-radius:6px;background:var(--bg2);overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--accent)}
+  .barrow{display:grid;grid-template-columns:130px 1fr 42px;gap:10px;align-items:center;margin:6px 0;font-size:12.5px}
+  label.fld{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px}
+  .chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .chip.sm{padding:5px 10px;font-size:12px}
+  input[type=number],input[type=date],input[type=search]{font-family:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink)}
+  .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:11px 18px;font-size:15px;font-weight:600}
+  .btn:hover{background:var(--accent-ink)} .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)} .btn.ghost:hover{border-color:var(--accent)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .runtop{display:flex;align-items:center;gap:12px;margin:4px 0 12px;font-size:13px;color:var(--muted)}
+  .runtop .bar{flex:1}
+  .timer{font-variant-numeric:tabular-nums;font-weight:700;padding:3px 10px;border-radius:8px;background:var(--bg2);color:var(--ink)}
+  .timer.warn{background:var(--bad-soft);color:var(--bad);animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.5}}
+  .qtype{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--accent-ink)}
+  .qtext{font-size:19px;font-weight:600;margin:6px 0 6px;font-family:Georgia,serif;line-height:1.4}
+  .hint{font-size:13px;color:var(--muted);margin-bottom:12px}
+  .opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;padding:13px 15px;margin-bottom:10px;font-size:15px;transition:.12s}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .k{flex:none;width:26px;height:26px;border-radius:7px;background:var(--bg2);color:var(--muted);display:grid;place-items:center;font-weight:700;font-size:13px}
+  .opt.box .k{border-radius:6px}
+  .opt.sel{border-color:var(--accent);background:var(--accent-soft)} .opt.sel .k{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--good-soft)} .opt.correct .k{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)} .opt.wrong .k{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default}
+  .mxrow{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:11px;padding:10px 12px;margin-bottom:9px}
+  .mxrow .t{flex:1;font-size:14.5px}
+  .mxbtn{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 11px;font-size:13px;font-weight:600}
+  .mxbtn.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .mxbtn.correct{background:var(--good);color:#fff;border-color:var(--good)}
+  .mxbtn.wrong{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .feedback{border-radius:11px;padding:12px 15px;margin:6px 0 14px;font-size:14px}
+  .feedback.ok{background:var(--good-soft);color:var(--good)} .feedback.no{background:var(--bad-soft);color:var(--bad)}
+  .feedback b{font-weight:700} .feedback .uit{color:var(--ink);margin-top:5px;font-size:13.5px}
+  .results .big{font-family:Georgia,serif;font-size:48px;text-align:center;margin:6px 0}
+  .center{text-align:center}.hide{display:none!important}
+  .acc{border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px;background:var(--card);overflow:hidden}
+  .acc>summary{padding:14px 16px;font-weight:700;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px}
+  .acc>summary::-webkit-details-marker{display:none}
+  .acc>summary .n{flex:none;min-width:26px;height:26px;padding:0 7px;border-radius:7px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:12px;font-weight:700}
+  .acc[open]>summary{border-bottom:1px solid var(--line)}
+  .acc .body{padding:8px 18px 16px}
+  .acc h4{margin:14px 0 6px;font-size:13px;color:var(--accent-ink);text-transform:uppercase;letter-spacing:.4px;font-family:system-ui}
+  .acc ul{margin:0;padding-left:18px} .acc li{margin:5px 0;font-size:14px}
+  .lq{border-top:1px solid var(--line);padding:12px 0}
+  .lq .v{font-weight:600;font-size:15px}
+  .lq .a{margin-top:6px;font-size:14px;color:var(--good);font-weight:600}
+  .lq .u{margin-top:4px;font-size:13.5px;color:var(--muted)}
+  .blur .a,.blur .u{filter:blur(5px);cursor:pointer;transition:filter .15s}
+  .lq.reveal .a,.lq.reveal .u{filter:none}
+  mark{background:var(--amber-soft);color:inherit;padding:0 2px;border-radius:3px}
+  footer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px}
+  .kbd{font-size:11px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="topin">
+    <div class="brand"><span class="logo">VCA</span><div>VCA Examentraining<small>Veiligheid · gezondheid · milieu</small></div></div>
+    <span class="spacer"></span>
+    <button class="iconbtn" id="themeBtn" title="Licht/donker">🌙</button>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button data-view="home" class="on">Start</button>
+    <button data-view="oefen">Oefenen</button>
+    <button data-view="examen">Examen-simulatie</button>
+    <button data-view="leer">Leerblad</button>
+  </nav>
+</header>
+<div class="wrap" id="app"></div>
+<script>
+window.VCA_DATA = [{"categorie":"Veiligheid Algemeen","type":"enkel","vraag":"Waar staat de afkorting VCA voor?","opties":["Veiligheid Checklist Arbeidsomstandigheden","Veiligheid, gezondheid en milieu Checklist Aannemers","Voorschriften voor Controle en Arbeid","Verklaring van Competente Arbeiders"],"juist":1,"uitleg":"VCA staat voor Veiligheid, gezondheid en milieu Checklist Aannemers."},{"categorie":"Veiligheid Algemeen","type":"enkel","vraag":"Wanneer voer je een LMRA (Laatste Minute Risico Analyse) uit?","opties":["Eén keer per jaar, samen met de RI&E","Vlak voordat je met het werk begint, op de werkplek zelf","Alleen als de leidinggevende erom vraagt","Na afloop van het werk, om te evalueren"],"juist":1,"uitleg":"Een LMRA doe je altijd vlak vóór aanvang van het werk: kijk, denk na en begin pas als het veilig kan."},{"categorie":"Veiligheid Algemeen","type":"enkel","vraag":"Wat is een toolboxmeeting?","opties":["Een controle van het gereedschap door de monteur","Een kort werkoverleg over veiligheid, gezondheid en milieu","Een jaarlijkse cursus voor leidinggevenden","Een vergadering over de aanschaf van nieuwe machines"],"juist":1,"uitleg":"Een toolboxmeeting is een kort, regelmatig terugkerend overleg waarin een veiligheidsonderwerp wordt besproken."},{"categorie":"Veiligheid Algemeen","type":"matrix","vraag":"Arbowet: geef per stelling aan of deze waar of niet waar is.","stellingen":[{"tekst":"De werkgever moet zorgen voor een veilige werkplek en veilige arbeidsmiddelen.","waar":true},{"tekst":"De werknemer is verplicht om beschikbaar gestelde PBM ook echt te gebruiken.","waar":true},{"tekst":"De Arbowet geldt alleen voor bedrijven met meer dan 50 werknemers.","waar":false},{"tekst":"Bij ernstig en direct gevaar mag de werknemer het werk onderbreken.","waar":true}],"uitleg":"De Arbowet geldt voor álle werkgevers en werknemers, ongeacht de bedrijfsgrootte. Werkgever én werknemer hebben verplichtingen, en bij ernstig direct gevaar mag het werk worden stilgelegd."},{"categorie":"Veiligheid Algemeen","type":"matrix","vraag":"Veilig gedrag: geef per stelling aan of deze waar of niet waar is.","stellingen":[{"tekst":"Je spreekt een collega aan als je ziet dat hij onveilig werkt.","waar":true},{"tekst":"Een bijna-ongeval hoef je niet te melden, want er is niets gebeurd.","waar":false},{"tekst":"Veiligheidsregels gelden ook als je haast hebt.","waar":true},{"tekst":"Een ervaren medewerker mag veiligheidsregels naar eigen inzicht aanpassen.","waar":false}],"uitleg":"Veiligheid is een zaak van iedereen: spreek elkaar aan, meld ook bijna-ongevallen en houd je altijd aan de regels — ook met haast of veel ervaring."},{"categorie":"PBM","type":"enkel","vraag":"Wanneer worden persoonlijke beschermingsmiddelen (PBM) ingezet?","opties":["Altijd als eerste maatregel, omdat het de goedkoopste oplossing is","Als de risico's niet bij de bron of met collectieve maatregelen voldoende weggenomen kunnen worden","Alleen bij werkzaamheden die langer dan een uur duren","Alleen als de opdrachtgever erom vraagt"],"juist":1,"uitleg":"PBM zijn het sluitstuk van de arbeidshygiënische strategie: eerst aanpak bij de bron en collectieve maatregelen, daarna pas PBM."},{"categorie":"PBM","type":"enkel","vraag":"Wanneer is het dragen van een veiligheidsbril in elk geval nodig?","opties":["Alleen bij het werken met chemicaliën","Bij kans op rondvliegende deeltjes of spatten, zoals bij boren en slijpen","Alleen buiten bij fel zonlicht","Alleen als je geen gewone bril draagt"],"juist":1,"uitleg":"Overal waar deeltjes of spatten in je ogen kunnen komen (boren, slijpen, hakken, chemicaliën) is oogbescherming nodig."},{"categorie":"PBM","type":"enkel","vraag":"Een veiligheidsharnas heeft een val opgevangen. Wat moet er met dit harnas gebeuren?","opties":["Het mag gewoon gebruikt worden als het er onbeschadigd uitziet","Het moet direct uit gebruik worden genomen en gekeurd of vervangen worden","Je mag het zelf repareren met stevig tape","Het hoeft alleen schoongemaakt te worden"],"juist":1,"uitleg":"Na een valbelasting kan een harnas onzichtbaar beschadigd zijn. Het moet direct uit gebruik en worden gekeurd of vervangen."},{"categorie":"PBM","type":"enkel","vraag":"Wie moet de benodigde PBM ter beschikking stellen en betalen?","opties":["De werknemer zelf","De werkgever","De Arbeidsinspectie","De fabrikant van het gereedschap"],"juist":1,"uitleg":"De werkgever stelt PBM gratis ter beschikking. De werknemer is verplicht ze te gebruiken en goed te onderhouden."},{"categorie":"Gevaarlijke Stoffen","type":"enkel","vraag":"Wat betekent het GHS-pictogram met een doodshoofd op een verpakking?","opties":["De stof is bijtend","De stof is (acuut) giftig","De stof is licht ontvlambaar","De stof staat onder druk"],"juist":1,"uitleg":"Het doodshoofd met gekruiste beenderen waarschuwt voor acuut giftige stoffen: al een kleine hoeveelheid kan ernstige gevolgen hebben."},{"categorie":"Gevaarlijke Stoffen","type":"enkel","vraag":"Welke informatie vind je op een veiligheidsinformatieblad (VIB/SDS)?","opties":["Alleen de prijs en bestelinformatie van de stof","De gevaren van de stof en de maatregelen om er veilig mee te werken","Alleen de naam van de fabrikant","De houdbaarheidsdatum van de stof"],"juist":1,"uitleg":"Het VIB (Engels: SDS) beschrijft onder andere de gevaren, de benodigde PBM, eerste hulp en wat te doen bij brand of lekkage."},{"categorie":"Gevaarlijke Stoffen","type":"enkel","vraag":"Een vloeistof heeft een hoge dampdruk. Wat betekent dit?","opties":["De vloeistof verdampt makkelijk, waardoor er snel veel damp in de lucht komt","De vloeistof kan niet branden","De vloeistof is zwaarder dan water","De vloeistof verdampt vrijwel niet"],"juist":0,"uitleg":"Hoe hoger de dampdruk, hoe makkelijker een vloeistof verdampt en hoe sneller een gevaarlijke concentratie damp kan ontstaan."},{"categorie":"Gevaarlijke Stoffen","type":"meervoudig","vraag":"Hoe ga je veilig om met gevaarlijke stoffen?","opties":["Lees vóór gebruik het etiket en het veiligheidsinformatieblad","Zorg voor voldoende ventilatie op de werkplek","Bewaar de stof altijd in de originele verpakking","Spoel restjes gewoon door het riool","Bewaar de stof in een frisdrankfles als de verpakking kapot is"],"juist":[0,1,2],"uitleg":"Etiket en VIB lezen, ventileren en de originele verpakking gebruiken is juist. Restjes horen bij het chemisch afval en overgieten in een frisdrankfles is levensgevaarlijk."},{"categorie":"Brand & Explosie","type":"enkel","vraag":"Welke drie elementen zijn nodig om brand te laten ontstaan (branddriehoek)?","opties":["Zuurstof, brandbare stof en een ontstekingsbron","Zuurstof, stikstof en warmte","Brandstof, water en lucht","Vonken, hout en wind"],"juist":0,"uitleg":"De branddriehoek bestaat uit zuurstof, een brandbare stof en een ontstekingsbron (temperatuur). Neem je er één weg, dan dooft de brand."},{"categorie":"Brand & Explosie","type":"enkel","vraag":"Met welk blusmiddel mag je een brandende vloeistof NIET blussen?","opties":["Een schuimblusser","Een poederblusser","Een straal water","Een koolzuursneeuwblusser (CO2)"],"juist":2,"uitleg":"Een waterstraal verspreidt de brandende vloeistof en maakt de brand juist groter. Gebruik schuim, poeder of CO2."},{"categorie":"Brand & Explosie","type":"enkel","vraag":"Je ontdekt brand op de werkplek. Wat doe je als eerste?","opties":["Meteen zelf proberen te blussen, wat er ook gebeurt","Alarm slaan en de mensen in de omgeving waarschuwen","Je spullen pakken en naar huis gaan","Eerst foto's maken voor de melding"],"juist":1,"uitleg":"Eerst alarmeren en mensen waarschuwen. Daarna mag je een beginnende brand blussen, maar alleen als dat zonder gevaar voor jezelf kan."},{"categorie":"Brand & Explosie","type":"enkel","vraag":"Wat geldt er voor vluchtwegen en nooduitgangen?","opties":["Ze mogen tijdelijk geblokkeerd worden als er materiaal opgeslagen moet worden","Ze moeten altijd vrijgehouden worden en goed bereikbaar zijn","Ze zijn alleen belangrijk in kantoorgebouwen","Ze mogen op slot om diefstal te voorkomen"],"juist":1,"uitleg":"Vluchtwegen en nooduitgangen moeten altijd vrij, goed zichtbaar en direct te openen zijn — ook tijdelijke blokkades zijn verboden."},{"categorie":"Werken op Hoogte","type":"enkel","vraag":"Vanaf welke hoogte ben je verplicht maatregelen tegen vallen te nemen?","opties":["1 meter","2,5 meter","5 meter","10 meter"],"juist":1,"uitleg":"Bij werken op 2,5 meter of hoger is valbeveiliging verplicht. Bij risicoverhogende omstandigheden (bijvoorbeeld boven water of uitstekende delen) ook al bij lagere hoogtes."},{"categorie":"Werken op Hoogte","type":"enkel","vraag":"Wat is de juiste voorkeursvolgorde bij beveiliging tegen vallen?","opties":["Eerst persoonlijke valbeveiliging (harnas), daarna pas leuningen","Eerst collectieve beveiliging zoals leuningen of steigers, daarna pas persoonlijke valbeveiliging","Alleen waarschuwingsborden plaatsen is voldoende","De volgorde maakt niet uit"],"juist":1,"uitleg":"Collectieve maatregelen (hekwerken, steigers, vangnetten) gaan altijd vóór persoonlijke valbeveiliging zoals een harnas met vanglijn."},{"categorie":"Werken op Hoogte","type":"enkel","vraag":"Wat is juist over het gebruik van een ladder?","opties":["Je plaatst de ladder onder een hoek van ongeveer 75 graden","Je mag met twee personen tegelijk de ladder op","Een ladder mag zonder maatregelen op een gladde vloer staan","Je klimt met je gezicht van de ladder af naar beneden"],"juist":0,"uitleg":"Een ladder plaats je onder circa 75 graden (verhouding 1 op 4), op een stevige ondergrond, en je klimt altijd met je gezicht naar de ladder toe."},{"categorie":"Elektriciteit","type":"enkel","vraag":"De kabel van je elektrisch handgereedschap is beschadigd. Wat doe je?","opties":["De kabel afplakken met isolatietape en doorwerken","Het gereedschap niet meer gebruiken en de schade melden, zodat een deskundige het repareert","Voorzichtig verder werken en de kabel niet aanraken","Zelf de kabel inkorten en een nieuwe stekker monteren"],"juist":1,"uitleg":"Beschadigd elektrisch gereedschap mag je niet gebruiken. Neem het uit gebruik, meld het en laat de reparatie over aan een deskundige."},{"categorie":"Elektriciteit","type":"enkel","vraag":"Wat wordt bedoeld met indirecte aanraking bij elektriciteit?","opties":["Het aanraken van een kapotte stekker","Het aanraken van een geleidend deel, zoals een metalen behuizing, dat door een defect onder spanning staat","Het aanraken van een draad die normaal altijd onder spanning staat","Het werken met geïsoleerd gereedschap"],"juist":1,"uitleg":"Bij indirecte aanraking raak je een deel aan dat normaal niet onder spanning staat, maar door een defect (bijvoorbeeld kapotte isolatie) wel."},{"categorie":"Elektriciteit","type":"enkel","vraag":"Wat houdt de LOTO-procedure (Lock Out, Tag Out) in?","opties":["De installatie spanningsloos maken, vergrendelen en voorzien van een label, zodat niemand hem onverwacht kan inschakelen","Het vervangen van zekeringen door zwaardere exemplaren","Het opbergen van gereedschap in een afgesloten kast","Het uitschakelen van de verlichting na werktijd"],"juist":0,"uitleg":"Met Lock Out, Tag Out wordt een installatie veiliggesteld: spanningsloos maken, op slot (lock) en voorzien van een label (tag) met wie eraan werkt."},{"categorie":"Fysieke Belasting","type":"enkel","vraag":"Wat is het maximale gewicht dat één persoon onder ideale omstandigheden mag tillen?","opties":["15 kg","23 kg","30 kg","50 kg"],"juist":1,"uitleg":"De richtlijn (NIOSH) is maximaal 23 kg onder ideale omstandigheden. In de praktijk ligt het veilige gewicht vaak lager."},{"categorie":"Fysieke Belasting","type":"enkel","vraag":"Wat hoort bij een juiste tiltechniek?","opties":["Tillen met een gebogen rug en gestrekte benen","Door de knieën zakken, de rug recht houden en de last dicht bij het lichaam houden","De last zo ver mogelijk van je lichaam af houden","Draaien met je bovenlichaam terwijl je de last tilt"],"juist":1,"uitleg":"Til vanuit de benen met een rechte rug, houd de last dicht bij je lichaam en verplaats je voeten in plaats van te draaien met je rug."},{"categorie":"Arbeidshygiëne","type":"enkel","vraag":"Vanaf welk dagelijks geluidsniveau is het dragen van gehoorbescherming verplicht?","opties":["70 dB(A)","80 dB(A)","85 dB(A)","95 dB(A)"],"juist":2,"uitleg":"Vanaf 80 dB(A) moet de werkgever gehoorbescherming aanbieden; vanaf 85 dB(A) is het dragen ervan verplicht."},{"categorie":"Arbeidshygiëne","type":"enkel","vraag":"Wat is een grenswaarde van een gevaarlijke stof?","opties":["De prijs die maximaal voor de stof betaald mag worden","De maximale concentratie van een stof in de lucht waaraan een werknemer mag worden blootgesteld","De minimale hoeveelheid die je per keer moet gebruiken","De temperatuur waarbij een stof vanzelf ontbrandt"],"juist":1,"uitleg":"De grenswaarde is de maximale concentratie in de ademlucht waaraan een werknemer gedurende een bepaalde tijd mag worden blootgesteld."},{"categorie":"Milieu","type":"enkel","vraag":"Er lekt olie uit een vat op het terrein. Wat doe je?","opties":["Niets, een klein beetje olie kan geen kwaad","De lekkage indammen of stoppen als dat veilig kan, en de situatie direct melden","De olie wegspoelen met water","Het vat achter ander materiaal zetten zodat niemand het ziet"],"juist":1,"uitleg":"Bij lekkage van milieugevaarlijke stoffen: stop of dam de lekkage in als dat veilig kan, voorkom verspreiding en meld het direct."},{"categorie":"Milieu","type":"matrix","vraag":"Afval en milieu: geef per stelling aan of deze waar of niet waar is.","stellingen":[{"tekst":"Chemisch afval mag gewoon bij het restafval.","waar":false},{"tekst":"Lege verfblikken horen bij het gevaarlijk (chemisch) afval.","waar":true},{"tekst":"Door afval te scheiden kan materiaal worden hergebruikt en wordt het milieu minder belast.","waar":true},{"tekst":"Een kleine hoeveelheid olie mag je in de bodem laten weglopen.","waar":false}],"uitleg":"Chemisch afval (ook lege verfblikken) wordt altijd apart ingezameld. Afval scheiden maakt hergebruik mogelijk, en olie mag nooit in de bodem of het riool terechtkomen."},{"categorie":"Machines & Gereedschap","type":"meervoudig","vraag":"Wat is juist bij het werken met een haakse slijper?","opties":["De beschermkap moet altijd gemonteerd zijn","Draag oog- en gezichtsbescherming","Controleer de schijf vóór gebruik op beschadigingen","Voor moeilijke hoeken mag je de beschermkap tijdelijk verwijderen","Met een doorslijpschijf mag je ook afbramen"],"juist":[0,1,2],"uitleg":"Beschermkap altijd erop, oogbescherming dragen en de schijf vooraf controleren. De kap verwijderen is verboden, en een doorslijpschijf mag je nooit op de zijkant belasten (afbramen)."},{"categorie":"Machines & Gereedschap","type":"enkel","vraag":"Wat geeft een CE-markering op een machine aan?","opties":["Dat de machine in Europa is gemaakt","Dat de fabrikant verklaart dat de machine voldoet aan de Europese veiligheidseisen","Dat de machine is goedgekeurd door de Arbeidsinspectie","Dat de machine dit jaar gekeurd is"],"juist":1,"uitleg":"Met de CE-markering verklaart de fabrikant dat het product voldoet aan de Europese richtlijnen voor veiligheid en gezondheid."},{"categorie":"Werkvergunningen","type":"enkel","vraag":"Wanneer is een werkvergunning vereist?","opties":["Voor al het dagelijkse, routinematige werk","Bij werkzaamheden met een verhoogd risico, zoals heet werk of werken in een besloten ruimte","Alleen als je voor het eerst op een locatie werkt","Alleen bij werkzaamheden in het buitenland"],"juist":1,"uitleg":"Een werkvergunning is nodig bij risicovolle werkzaamheden of op risicovolle locaties. Erin staat wat, waar, wanneer en onder welke voorwaarden gewerkt mag worden."},{"categorie":"Werkvergunningen","type":"enkel","vraag":"Tijdens werk met een werkvergunning veranderen de omstandigheden. Wat doe je?","opties":["Gewoon doorwerken, de vergunning is immers al afgegeven","Het werk stoppen en contact opnemen met de verstrekker van de vergunning","Zelf de vergunning aanpassen aan de nieuwe situatie","Alleen je collega's informeren en verder gaan"],"juist":1,"uitleg":"Een werkvergunning geldt alleen voor de omstandigheden waarvoor hij is afgegeven. Veranderen die, dan stop je het werk en overleg je met de vergunningverstrekker."},{"categorie":"Besloten Ruimten","type":"meervoudig","vraag":"Wat zijn kenmerken van een besloten ruimte?","opties":["Een nauwe of moeilijke toegang om te betreden en te verlaten","Niet ontworpen voor langdurig verblijf van personen","Weinig of geen natuurlijke ventilatie","Altijd volledig ondergronds gelegen","Altijd groter dan 100 kubieke meter"],"juist":[0,1,2],"uitleg":"Een besloten ruimte (zoals een tank, kruipruimte, riool of silo) is moeilijk te betreden en verlaten, niet bedoeld voor verblijf en slecht geventileerd. De ligging en grootte maken niet uit."},{"categorie":"Besloten Ruimten","type":"enkel","vraag":"Wat is onder andere verplicht voordat je een besloten ruimte mag betreden?","opties":["Alleen een zaklamp meenemen","Een werkvergunning en een meting van de atmosfeer (gasmeting)","Een collega die buiten staat te roken","Niets, zolang je er maar kort in blijft"],"juist":1,"uitleg":"Vóór het betreden zijn onder andere een werkvergunning, een gasmeting (zuurstof, brandbare en giftige gassen) en een mangatwacht buiten de ruimte verplicht."},{"categorie":"Gezondheid","type":"enkel","vraag":"Wat is het doel van een Preventief Medisch Onderzoek (PMO)?","opties":["Controleren of je wel hard genoeg werkt","Gezondheidsrisico's door het werk vroegtijdig opsporen en de gezondheid van werknemers bewaken","Bepalen wie er ontslagen wordt","Het vaststellen van het salaris"],"juist":1,"uitleg":"Een PMO is een vrijwillig, periodiek onderzoek om gezondheidsschade door het werk vroegtijdig op te sporen en te voorkomen."},{"categorie":"Gezondheid","type":"enkel","vraag":"Je gebruikt medicijnen die je reactievermogen kunnen beïnvloeden. Wat doe je?","opties":["Niets, dat is privé","Dit vóór aanvang van het werk melden bij je leidinggevende","Gewoon beginnen en zelf extra opletten","De medicijnen overslaan op werkdagen"],"juist":1,"uitleg":"Medicijnen die je reactievermogen beïnvloeden kunnen jou en je collega's in gevaar brengen. Meld dit vooraf, zodat er passend werk geregeld kan worden."},{"categorie":"Incidenten & EHBO","type":"enkel","vraag":"Er gebeurt een ernstig ongeval met een slachtoffer. Wat doe je als eerste?","opties":["Het slachtoffer direct verplaatsen","Eerst letten op gevaar voor jezelf en de omgeving, daarna hulp alarmeren","Meteen de werkgever bellen voor het papierwerk","Foto's maken voor het onderzoeksrapport"],"juist":1,"uitleg":"Let altijd eerst op je eigen veiligheid en die van omstanders, zodat er geen tweede slachtoffer valt. Alarmeer daarna direct (deskundige) hulp."},{"categorie":"Incidenten & EHBO","type":"enkel","vraag":"Welke arbeidsongevallen moet de werkgever direct melden bij de Nederlandse Arbeidsinspectie?","opties":["Alle ongevallen, ook kleine snijwondjes","Ongevallen met dodelijke afloop, ziekenhuisopname of blijvend letsel","Alleen ongevallen met machines","Alleen ongevallen met meer dan drie slachtoffers"],"juist":1,"uitleg":"Meldingsplichtig zijn arbeidsongevallen met dodelijke afloop, ziekenhuisopname of blijvend letsel. Die moeten direct gemeld worden."},{"categorie":"Incidenten & EHBO","type":"enkel","vraag":"Wat is een bijna-ongeval (near miss)?","opties":["Een ongeval met alleen lichte verwondingen","Een onverwachte gebeurtenis die geen letsel of schade veroorzaakte, maar dat wél had kunnen doen","Een ongeval dat bijna was opgelost","Een ongeval dat buiten werktijd gebeurde"],"juist":1,"uitleg":"Een bijna-ongeval liep goed af, maar had fout kunnen gaan. Door het te melden kunnen maatregelen genomen worden vóórdat het echt misgaat."},{"categorie":"Veiligheid Algemeen","type":"enkel","vraag":"Wat is het doel van een RI&E (Risico-Inventarisatie en -Evaluatie)?","opties":["Het registreren van gewerkte uren","Risico's in kaart brengen, beoordelen én een plan van aanpak maken","Het keuren van machines","Het opleiden van BHV'ers"],"juist":1,"uitleg":"In de RI&E worden alle risico's geïnventariseerd en beoordeeld, met een plan van aanpak om ze weg te nemen of te beheersen."},{"categorie":"Veiligheid Algemeen","type":"enkel","vraag":"Wat is de juiste volgorde van de arbeidshygiënische strategie?","opties":["PBM eerst, want dat is het goedkoopst","Bron → collectieve maatregelen → individuele/organisatorische maatregelen → PBM","Eerst collectief, dan de bron","De volgorde maakt niet uit"],"juist":1,"uitleg":"Pak risico's eerst bij de bron aan, dan met collectieve maatregelen, dan individueel/organisatorisch, en pas als laatste met PBM."},{"categorie":"Veiligheid Algemeen","type":"enkel","vraag":"Je ziet een onveilige situatie die je niet zelf kunt oplossen. Wat doe je?","opties":["Negeren en doorwerken","Melden bij je leidinggevende en zo nodig het werk stilleggen","Wachten tot een ander het meldt","Zelf iets improviseren"],"juist":1,"uitleg":"Meld onveilige situaties direct. Bij ernstig en direct gevaar mag je het werk onderbreken."},{"categorie":"Veiligheid Algemeen","type":"matrix","vraag":"VGM-beleid: geef per stelling aan of deze waar of niet waar is.","stellingen":[{"tekst":"VCA is een wet die door de overheid verplicht is gesteld.","waar":false},{"tekst":"Een ongeval met verzuim moet worden gemeld en onderzocht.","waar":true},{"tekst":"Toolboxmeetings worden geregistreerd.","waar":true},{"tekst":"Ervaren werknemers mogen veiligheidsregels naar eigen inzicht aanpassen.","waar":false}],"uitleg":"VCA is geen wet, maar wordt door opdrachtgevers geëist. Ongevallen melden/onderzoeken en toolboxen registreren hoort erbij; regels gelden voor iedereen."},{"categorie":"PBM","type":"enkel","vraag":"Vanaf welk dagelijks geluidsniveau is het dragen van gehoorbescherming verplicht?","opties":["80 dB(A)","85 dB(A)","90 dB(A)","100 dB(A)"],"juist":1,"uitleg":"Vanaf 80 dB(A) moet de werkgever gehoorbescherming beschikbaar stellen; vanaf 85 dB(A) is dragen verplicht."},{"categorie":"PBM","type":"enkel","vraag":"Wat moet je doen vóór je een PBM gebruikt?","opties":["Niets, PBM gaan altijd lang mee","Controleren op gebreken/beschadigingen en op juiste pasvorm","Het merk noteren","Het eerst een dag laten liggen"],"juist":1,"uitleg":"De gebruiker controleert PBM vóór gebruik op gebreken en zorgt dat ze goed passen; beschadigde PBM niet gebruiken."},{"categorie":"PBM","type":"enkel","vraag":"Waartegen beschermen veiligheidsschoenen met stalen neus en doortrapbeveiliging vooral?","opties":["Tegen geluid","Tegen vallende voorwerpen en het intrappen van scherpe voorwerpen","Tegen elektrocutie","Tegen inademen van stof"],"juist":1,"uitleg":"De stalen neus beschermt tegen vallende/rollende voorwerpen, de tussenzool tegen doorboring door spijkers e.d."},{"categorie":"PBM","type":"enkel","vraag":"Welk PBM kies je tegen het inademen van fijnstof zoals kwarts?","opties":["Een chirurgisch mondkapje","Een stofmasker/adembescherming met de juiste filterklasse (bijv. P3)","Een gewone sjaal","Oordoppen"],"juist":1,"uitleg":"Tegen schadelijk (fijn)stof gebruik je adembescherming met de juiste filterklasse; combineer bij voorkeur met bronafzuiging."},{"categorie":"Gevaarlijke Stoffen","type":"enkel","vraag":"Wat is een VIB (veiligheidsinformatieblad / SDS)?","opties":["Een bestelbon voor chemicaliën","Een document met de gevaren en het veilig gebruik, opslag en EHBO van een stof","Een keuringsrapport van gereedschap","Een vergunning"],"juist":1,"uitleg":"Het VIB beschrijft de eigenschappen, gevaren, beschermingsmaatregelen, opslag en eerste hulp bij een gevaarlijke stof."},{"categorie":"Gevaarlijke Stoffen","type":"enkel","vraag":"Wat betekent het GHS-pictogram met een vlam?","opties":["Giftig","Ontvlambaar","Bijtend","Milieugevaarlijk"],"juist":1,"uitleg":"De vlam staat voor ontvlambare stoffen; houd deze weg van ontstekingsbronnen."},{"categorie":"Gevaarlijke Stoffen","type":"enkel","vraag":"Wat betekent het pictogram met een dode boom en dode vis?","opties":["Brandgevaarlijk","Gevaarlijk voor het milieu (waterorganismen)","Onder druk","Oxiderend"],"juist":1,"uitleg":"Dit pictogram waarschuwt dat de stof schadelijk is voor het milieu; voorkom dat het in bodem of water terechtkomt."},{"categorie":"Gevaarlijke Stoffen","type":"matrix","vraag":"Opslag van gevaarlijke stoffen: waar of niet waar?","stellingen":[{"tekst":"Zuren en basen mag je gewoon naast elkaar opslaan.","waar":false},{"tekst":"Bewaar gevaarlijke stoffen in de originele, gesloten en geëtiketteerde verpakking.","waar":true},{"tekst":"Een lekbak voorkomt dat gemorste vloeistof zich verspreidt.","waar":true},{"tekst":"Je mag het etiket verwijderen als je zelf weet wat erin zit.","waar":false}],"uitleg":"Sla stoffen die met elkaar kunnen reageren gescheiden op, gebruik lekbakken en behoud altijd de originele verpakking met etiket."},{"categorie":"Brand & Explosie","type":"enkel","vraag":"Welke drie elementen zijn samen nodig voor brand (de branddriehoek)?","opties":["Water, lucht en druk","Brandstof, zuurstof en een ontstekingsbron (warmte)","Gas, vonk en water","Stof, licht en geluid"],"juist":1,"uitleg":"Brand ontstaat alleen als brandstof, zuurstof én een ontstekingsbron samenkomen. Haal je er één weg, dan dooft het vuur."},{"categorie":"Brand & Explosie","type":"enkel","vraag":"Welk blusmiddel gebruik je NIET op een brand in elektrische apparatuur onder spanning?","opties":["CO₂-blusser","Poederblusser","Water","Blusdeken (bij klein vuur)"],"juist":2,"uitleg":"Water geleidt stroom en geeft kans op elektrocutie. Gebruik bij een elektriciteitsbrand CO₂ of poeder."},{"categorie":"Brand & Explosie","type":"enkel","vraag":"Wat betekent een ATEX/Ex-zone op de werkplek?","opties":["Er mag alleen 's nachts gewerkt worden","Er kan een explosieve atmosfeer (gas, damp of stof) aanwezig zijn","Het is een rookruimte","Er is asbest aanwezig"],"juist":1,"uitleg":"In een Ex-zone kan een explosieve atmosfeer ontstaan; gebruik daarom alleen explosieveilig (vonkvrij) materieel en geen ontstekingsbronnen."},{"categorie":"Brand & Explosie","type":"enkel","vraag":"Wat doe je als eerste bij een brandalarm?","opties":["Eerst je spullen opruimen","Jezelf in veiligheid brengen en ontruimen volgens de instructies","Eerst foto's maken","Doorwerken tot je leidinggevende komt"],"juist":1,"uitleg":"Bij een ontruimingsalarm breng je jezelf direct in veiligheid via de vluchtroute en verzamel je op de verzamelplaats."},{"categorie":"Werken op Hoogte","type":"enkel","vraag":"Vanaf welke hoogte moet je in principe maatregelen tegen vallen nemen?","opties":["Vanaf 0,5 meter","Vanaf 1 meter","Vanaf 2,5 meter (of bij risico ongeacht de hoogte)","Pas vanaf 10 meter"],"juist":2,"uitleg":"Bij valgevaar vanaf 2,5 meter zijn maatregelen verplicht; bij bijzonder risico (bijv. boven uitstekende delen of water) ook lager."},{"categorie":"Werken op Hoogte","type":"enkel","vraag":"Onder welke hoek zet je een (op)steekladder neer?","opties":["Ongeveer 1:1 (45°)","Ongeveer 1:4 (circa 75°)","Zo plat mogelijk","Helemaal verticaal"],"juist":1,"uitleg":"De vuistregel is 1 deel uit de muur op 4 delen hoogte (±75°). Laat de ladder minimaal 1 meter uitsteken boven de overstap."},{"categorie":"Werken op Hoogte","type":"enkel","vraag":"Wanneer mag je een ladder als werkplek gebruiken?","opties":["Voor alle werk, zolang je voorzichtig bent","Alleen voor licht, kortdurend werk; anders een steiger of hoogwerker","Nooit, ladders zijn verboden","Alleen als je een collega de ladder laat vasthouden"],"juist":1,"uitleg":"Een ladder is bedoeld als toegangsmiddel en alleen voor licht, kortdurend werk. Voor langer/zwaarder werk gebruik je een steiger of hoogwerker."},{"categorie":"Werken op Hoogte","type":"enkel","vraag":"Waaraan bevestig je de vanglijn van een valharnas?","opties":["Aan je gereedschapsriem","Aan een goedgekeurd, sterk verankeringspunt, bij voorkeur boven je","Aan een leuning van plastic","Aan de ladder zelf"],"juist":1,"uitleg":"Het ankerpunt moet voldoende sterk zijn en zo hoog mogelijk zitten, zodat de valafstand klein blijft."},{"categorie":"Elektriciteit","type":"enkel","vraag":"Wat houdt 'veilig spanningsloos werken' in?","opties":["Gewoon de stekker eruit en beginnen","Vrijschakelen, vergrendelen/markeren én controleren dat het echt spanningsloos is","Met droge handen werken","Alleen overdag werken"],"juist":1,"uitleg":"Schakel de installatie vrij, vergrendel en markeer deze, en stel met een meting vast dat er écht geen spanning meer op staat."},{"categorie":"Elektriciteit","type":"enkel","vraag":"Wat is de functie van een aardlekschakelaar?","opties":["Hij verhoogt de spanning","Hij schakelt snel uit bij een lekstroom en beschermt zo tegen elektrocutie","Hij meet het verbruik","Hij voorkomt overbelasting van het lichtnet"],"juist":1,"uitleg":"Een aardlekschakelaar (bijv. 30 mA) onderbreekt de stroom snel bij een aardlek, waardoor de kans op een dodelijke schok sterk afneemt."},{"categorie":"Elektriciteit","type":"enkel","vraag":"Je vindt een verlengkabel met een beschadigde mantel. Wat doe je?","opties":["Afplakken met tape en gebruiken","Niet gebruiken, markeren en laten repareren/vervangen","Gewoon gebruiken, het werkt nog","In het water leggen om af te koelen"],"juist":1,"uitleg":"Beschadigde kabels geven kans op kortsluiting, brand en elektrocutie. Neem ze uit gebruik en laat ze vervangen of repareren door een deskundige."},{"categorie":"Elektriciteit","type":"enkel","vraag":"Wie mag werken aan een elektrische installatie?","opties":["Iedereen","Alleen voldoende opgeleide en daartoe aangewezen personen (VOP/VP)","Alleen de jongste medewerker","Alleen de opdrachtgever"],"juist":1,"uitleg":"Werken aan elektrische installaties mag alleen door personen die daarvoor zijn opgeleid en aangewezen (Voldoend Onderricht Persoon / Vakbekwaam Persoon)."},{"categorie":"Fysieke Belasting","type":"enkel","vraag":"Hoe til je een zware last op de juiste manier?","opties":["Met gestrekte benen en gebogen rug","Door je knieën, met een rechte rug en de last dicht tegen je lichaam","Zo snel mogelijk met een ruk","Met getordeerd (gedraaid) bovenlichaam"],"juist":1,"uitleg":"Til met je beenspieren: zak door de knieën, houd je rug recht en de last dicht bij je lichaam, en draai niet met je rug onder belasting."},{"categorie":"Fysieke Belasting","type":"enkel","vraag":"Boven welk tilgewicht moet je in principe hulpmiddelen of extra maatregelen overwegen?","opties":["Boven 5 kg","Boven ongeveer 25 kg","Boven 50 kg","Boven 100 kg"],"juist":1,"uitleg":"Circa 25 kg geldt als grens; onder ongunstige omstandigheden (ver reiken, draaien, hoog/laag) is dat minder. Gebruik dan tilhulpmiddelen of til met z'n tweeën."},{"categorie":"Fysieke Belasting","type":"enkel","vraag":"Wat is RSI / KANS?","opties":["Een soort gehoorschade","Klachten aan armen, nek en schouders door herhaalde bewegingen of een verkeerde houding","Een huidziekte door chemicaliën","Een longziekte"],"juist":1,"uitleg":"RSI/KANS ontstaat door langdurig herhaalde bewegingen, een statische of verkeerde houding; afwisseling en goede werkhouding voorkomen het."},{"categorie":"Arbeidshygiëne","type":"enkel","vraag":"Wat is een grenswaarde (voorheen MAC-waarde) van een gevaarlijke stof?","opties":["De prijs van de stof","De maximaal toegestane concentratie in de lucht waaraan je blootgesteld mag worden","De kooktemperatuur","Het gewicht van de verpakking"],"juist":1,"uitleg":"De grenswaarde geeft aan hoeveel van een stof maximaal in de werkruimtelucht aanwezig mag zijn zonder onaanvaardbaar gezondheidsrisico."},{"categorie":"Arbeidshygiëne","type":"enkel","vraag":"Wat is de belangrijkste opnameroute van schadelijke dampen en gassen?","opties":["Via de huid","Via inademing (de longen)","Via de oren","Via de nagels"],"juist":1,"uitleg":"Dampen en gassen komen vooral via inademing binnen; daarnaast kunnen stoffen via huid, mond (inslikken) of wondjes (prikken) worden opgenomen."},{"categorie":"Arbeidshygiëne","type":"enkel","vraag":"Hoe beperk je blootstelling aan stof het beste bij slijpen of boren?","opties":["Harder werken zodat je sneller klaar bent","Bronafzuiging of nat werken toepassen, aangevuld met adembescherming","Een raam openzetten is altijd genoeg","Niets, stof is ongevaarlijk"],"juist":1,"uitleg":"Bestrijd stof bij de bron (afzuiging of water) en gebruik daarnaast geschikte adembescherming."},{"categorie":"Milieu","type":"enkel","vraag":"Wat doe je met chemisch afval, zoals restanten verf of olie?","opties":["Door de gootsteen of het riool spoelen","Gescheiden inzamelen en afvoeren volgens de regels (klein gevaarlijk afval)","Bij het gewone restafval gooien","In de natuur achterlaten"],"juist":1,"uitleg":"Chemisch/klein gevaarlijk afval moet gescheiden worden ingezameld en via de juiste route afgevoerd; nooit in riool of restafval."},{"categorie":"Milieu","type":"enkel","vraag":"Wat is het belangrijkste doel van afval scheiden op de bouwplaats?","opties":["Het ziet er netter uit","Hergebruik/recycling mogelijk maken en de milieubelasting verkleinen","Het kost minder tijd","Het is wettelijk niet nodig"],"juist":1,"uitleg":"Gescheiden afval kan worden hergebruikt of gerecycled, wat grondstoffen spaart en het milieu minder belast."},{"categorie":"Milieu","type":"matrix","vraag":"Milieuzorg op het werk: waar of niet waar?","stellingen":[{"tekst":"Gemorste olie mag je met veel water wegspoelen.","waar":false},{"tekst":"Bij een (dreigende) bodem- of waterverontreiniging meld je dit direct.","waar":true},{"tekst":"Lege verf- en lijmblikken horen bij het gewone restafval.","waar":false},{"tekst":"Zuinig omgaan met energie en grondstoffen hoort ook bij milieuzorg.","waar":true}],"uitleg":"Gemorste stoffen ruim je op met absorptiemateriaal (niet wegspoelen), verontreiniging meld je direct, en restanten/verpakkingen van gevaarlijke stoffen zijn klein gevaarlijk afval."},{"categorie":"Machines & Gereedschap","type":"enkel","vraag":"Wat betekent de CE-markering op een machine of arbeidsmiddel?","opties":["Het is in China gemaakt","De fabrikant verklaart dat het voldoet aan de Europese veiligheids- en gezondheidseisen","Het is tweedehands","Het mag alleen binnen gebruikt worden"],"juist":1,"uitleg":"CE betekent dat het product voldoet aan de geldende Europese richtlijnen voor veiligheid, gezondheid en milieu."},{"categorie":"Machines & Gereedschap","type":"enkel","vraag":"Waarom mag je een afschermkap of beveiliging van een machine niet verwijderen?","opties":["Dat maakt de machine sneller","Beveiligingen beschermen je tegen bewegende of gevaarlijke delen; zonder loop je groot risico","Het mag wel, als je oplet","Alleen de baas mag dat beslissen, verder maakt het niet uit"],"juist":1,"uitleg":"Beveiligingen voorkomen contact met bewegende/gevaarlijke delen. Verwijderen of overbruggen is verboden en levensgevaarlijk."},{"categorie":"Machines & Gereedschap","type":"enkel","vraag":"Wat controleer je vóór je elektrisch handgereedschap gebruikt?","opties":["Alleen de kleur","Of het onbeschadigd en gekeurd is en geschikt voor de klus","Of het zwaar genoeg is","Niets, controleren is overbodig"],"juist":1,"uitleg":"Controleer gereedschap en snoer op beschadigingen, kijk of de keuring geldig is en of het geschikt is voor het werk."},{"categorie":"Werkvergunningen","type":"enkel","vraag":"Wanneer is meestal een werkvergunning nodig?","opties":["Voor elk klein klusje","Bij werkzaamheden met een verhoogd risico, zoals heet werk, besloten ruimten of werken aan installaties","Alleen op vrijdag","Nooit"],"juist":1,"uitleg":"Een werkvergunning regelt extra afspraken en maatregelen bij risicovol werk (heet werk, besloten ruimte, hoogspanning, graafwerk e.d.)."},{"categorie":"Werkvergunningen","type":"enkel","vraag":"Wat wordt verstaan onder 'heet werk'?","opties":["Werk in de zomer","Werk waarbij vonken, open vuur of hitte vrijkomt, zoals lassen, slijpen en branden","Werk met warm water","Zwaar tilwerk"],"juist":1,"uitleg":"Heet werk geeft vonken/vlammen/hitte en dus brand- en explosiegevaar; daarvoor gelden extra maatregelen en vaak een werkvergunning."},{"categorie":"Werkvergunningen","type":"enkel","vraag":"Wat staat er onder andere in een werkvergunning?","opties":["Alleen de naam van de klant","Welk werk, waar, hoelang, welke risico's en maatregelen, en wie verantwoordelijk is","Het weerbericht","De prijs van het werk"],"juist":1,"uitleg":"De werkvergunning legt vast wat er gebeurt, welke risico's er zijn, welke maatregelen gelden, de geldigheidsduur en wie verantwoordelijk is."},{"categorie":"Besloten Ruimten","type":"enkel","vraag":"Wat is vaak het grootste, onzichtbare gevaar in een besloten ruimte?","opties":["Te weinig licht","Zuurstoftekort of giftige/explosieve gassen","Lawaai","Gladheid"],"juist":1,"uitleg":"In besloten ruimten (tanks, putten, riolen) kan zuurstof ontbreken of kunnen giftige/explosieve gassen aanwezig zijn — levensgevaarlijk en vaak niet waarneembaar."},{"categorie":"Besloten Ruimten","type":"enkel","vraag":"Wat doe je vóór je een besloten ruimte betreedt?","opties":["Gewoon naar binnen gaan","De atmosfeer meten (zuurstof en gassen) en de ruimte ventileren","Eerst een sigaret opsteken","De ruimte afsluiten"],"juist":1,"uitleg":"Meet eerst zuurstof- en gasconcentraties en ventileer de ruimte; betreed pas als het veilig is en alle maatregelen geregeld zijn."},{"categorie":"Besloten Ruimten","type":"enkel","vraag":"Wat is verplicht bij het werken in een besloten ruimte?","opties":["Alleen een zaklamp","Een mangatwacht/buitenwacht, gasmeting, ventilatie en meestal een werkvergunning","Niets bijzonders","Alleen handschoenen"],"juist":1,"uitleg":"Er moet toezicht (buitenwacht) zijn, de atmosfeer wordt bewaakt, er wordt geventileerd en er geldt vaak een werkvergunning met reddingsplan."},{"categorie":"Gezondheid","type":"enkel","vraag":"Wat is een gevolg van langdurige blootstelling aan hard geluid?","opties":["Tijdelijke hoofdpijn die altijd overgaat","Blijvende gehoorschade (lawaaidoofheid)","Betere concentratie","Geen enkel gevolg"],"juist":1,"uitleg":"Hard geluid kan het gehoor onherstelbaar beschadigen. Gehoorschade is blijvend, daarom is gehoorbescherming zo belangrijk."},{"categorie":"Gezondheid","type":"enkel","vraag":"Waarom zijn alcohol, drugs of bepaalde medicijnen een veiligheidsrisico op het werk?","opties":["Ze maken je sterker","Ze verminderen je alertheid, reactievermogen en beoordelingsvermogen","Ze hebben geen invloed","Ze zijn alleen 's avonds een probleem"],"juist":1,"uitleg":"Onder invloed reageer je trager en schat je risico's verkeerd in, met meer kans op ongevallen voor jezelf en anderen."},{"categorie":"Gezondheid","type":"enkel","vraag":"Wat is het doel van een PAGO/PMO (periodiek arbeidsgezondheidskundig onderzoek)?","opties":["Je salaris bepalen","Gezondheidsklachten die met het werk te maken hebben vroegtijdig opsporen","Je vakantie plannen","Je productiviteit meten"],"juist":1,"uitleg":"Met een PAGO/PMO worden werkgerelateerde gezondheidsrisico's en -klachten op tijd opgespoord, zodat er maatregelen genomen kunnen worden."},{"categorie":"Incidenten & EHBO","type":"enkel","vraag":"Wat is de eerste stap als je bij een ongeval komt?","opties":["Meteen het slachtoffer vastpakken","Eerst zorgen voor je eigen veiligheid en de situatie veilig maken","Eerst een foto maken","Weggaan en hulp afwachten"],"juist":1,"uitleg":"Zorg eerst dat jij geen tweede slachtoffer wordt: maak de situatie veilig, alarmeer hulp en help dan pas het slachtoffer."},{"categorie":"Incidenten & EHBO","type":"enkel","vraag":"Er spat een chemische stof in iemands oog. Wat doe je?","opties":["Het oog dichtknijpen en wachten","Direct langdurig spoelen met (lauw) water, minstens 15 minuten, en medische hulp inschakelen","Wrijven in het oog","Er zalf op doen"],"juist":1,"uitleg":"Spoel het oog onmiddellijk en langdurig (ten minste 15 minuten) met water of oogspoeling en schakel medische hulp in."},{"categorie":"Incidenten & EHBO","type":"enkel","vraag":"Wat is een 'bijna-ongeval' en waarom meld je het?","opties":["Een ongeval met letsel; melden hoeft niet","Een gebeurtenis die nét geen letsel of schade gaf, maar dat wel had gekund — melden voorkomt herhaling","Een grapje van een collega","Een geplande oefening"],"juist":1,"uitleg":"Een bijna-ongeval is een waarschuwing. Door het te melden en te onderzoeken voorkom je dat het de volgende keer wél misgaat."}];
+window.VCA_SUMMARY = [{"cat":"Veiligheid Algemeen","items":["VCA = Veiligheid, gezondheid en milieu Checklist Aannemers. Geen wet, maar geëist door opdrachtgevers.","RI&E = risico's inventariseren + beoordelen + plan van aanpak. LMRA = Laatste Minuut Risico Analyse, vlak vóór je begint op de werkplek zelf.","Arbeidshygiënische strategie (volgorde): bron → collectieve maatregelen → individuele/organisatorische → PBM (als laatste).","Arbowet: werkgever zorgt voor veilige werkplek, middelen en voorlichting; werknemer werkt veilig en gebruikt PBM. Bij ernstig en direct gevaar mag het werk worden stilgelegd.","Toolboxmeeting = kort, regelmatig veiligheidsoverleg (wordt geregistreerd). Meld onveilige situaties en (bijna-)ongevallen."]},{"cat":"PBM","items":["PBM zijn het sluitstuk (laatste maatregel). De werkgever stelt ze gratis ter beschikking; jij gebruikt, onderhoudt en controleert ze vóór gebruik.","Soorten: helm, veiligheids-/spatbril, gehoorbescherming, adembescherming (juiste filterklasse), handschoenen, veiligheidsschoenen (S3 = stalen neus + doortrapbescherming), valbescherming (harnas).","Geluid: vanaf 80 dB(A) beschikbaar stellen, vanaf 85 dB(A) verplicht dragen.","Een harnas dat een val heeft opgevangen: direct uit gebruik nemen en laten keuren of vervangen."]},{"cat":"Gevaarlijke Stoffen","items":["Lees vóór gebruik altijd het etiket én het VIB (veiligheidsinformatieblad/SDS).","GHS-pictogrammen: doodshoofd = giftig, vlam = ontvlambaar, bijtend, uitroepteken = schadelijk/irriterend, dode boom+vis = milieugevaarlijk, gasfles = onder druk, ontploffend = explosief, gezondheidsgevaar (o.a. kankerverwekkend).","Bewaren in de originele, gesloten en geëtiketteerde verpakking; stoffen die reageren gescheiden opslaan; lekbakken gebruiken en goed ventileren.","Restanten zijn chemisch/klein gevaarlijk afval — nooit door het riool en nooit in een frisdrankfles."]},{"cat":"Brand & Explosie","items":["Branddriehoek: brandstof + zuurstof + ontstekingsbron. Haal er één weg en het vuur dooft.","Blusmiddelen: water (NIET op elektra of vet/olie), schuim, poeder, CO₂ (geschikt voor elektra), blusdeken (klein vuur/pan).","ATEX/Ex-zone = kans op explosieve atmosfeer (gas, damp of stof): alleen vonkvrij materieel, geen ontstekingsbronnen, werkvergunning.","Bij brandalarm: jezelf in veiligheid brengen via de vluchtroute naar de verzamelplaats."]},{"cat":"Werken op Hoogte","items":["Valgevaar vanaf 2,5 meter (of lager bij bijzonder risico) → maatregelen verplicht: leuning, steiger, hoogwerker of harnas.","Ladder: alleen voor licht en kortdurend werk; hoek 1:4 (±75°); minstens 1 meter laten uitsteken boven de overstap.","Valharnas + vanglijn vastmaken aan een goedgekeurd, sterk ankerpunt, zo hoog mogelijk; harnas regelmatig keuren.","Steiger: compleet, gekeurd (groene steigerkaart), met leuningen en kantplanken."]},{"cat":"Elektriciteit","items":["Veilig spanningsloos werken: vrijschakelen → vergrendelen/markeren → vaststellen dat het écht spanningsloos is (meten).","Aardlekschakelaar (bijv. 30 mA) schakelt snel uit bij lekstroom en beschermt tegen elektrocutie.","Controleer snoeren en gereedschap; beschadigde kabels niet gebruiken (kans op kortsluiting, brand, schok).","Werken aan installaties mag alleen door opgeleide/aangewezen personen (VOP/VP). Water en elektriciteit zijn een gevaarlijke combinatie."]},{"cat":"Fysieke Belasting","items":["Til met je beenspieren: door de knieën, rechte rug, last dicht bij je lichaam, en niet draaien onder belasting.","Richtwaarde ~25 kg; onder ongunstige omstandigheden minder. Gebruik tilhulpmiddelen of til samen.","RSI/KANS = klachten aan armen, nek en schouders door herhaalde bewegingen of een verkeerde/statische houding → afwisseling en goede werkhouding."]},{"cat":"Arbeidshygiëne","items":["Blootstellingsroutes: inademen (belangrijkst voor gas/damp), via de huid, inslikken en prikken/wondjes.","Grenswaarde = de maximaal toegestane concentratie van een stof in de werkruimtelucht.","Beperk blootstelling bij de bron (afzuiging, nat werken) en gebruik daarnaast adembescherming. Agentia: chemisch, fysisch (geluid, trilling, straling, klimaat) en biologisch."]},{"cat":"Milieu","items":["Scheid afval voor hergebruik/recycling; chemisch en klein gevaarlijk afval apart inzamelen en correct afvoeren.","Gemorste stoffen opvangen met absorptiemateriaal — niet wegspoelen met water.","Een (dreigende) bodem- of waterverontreiniging meld je direct. Ga zuinig om met energie en grondstoffen."]},{"cat":"Machines & Gereedschap","items":["CE-markering = de fabrikant verklaart dat het voldoet aan de Europese veiligheids- en gezondheidseisen.","Afschermkappen en beveiligingen nooit verwijderen of overbruggen — ze beschermen tegen bewegende/gevaarlijke delen.","Controleer gereedschap vóór gebruik op beschadigingen en geldige keuring; gebruik het juiste gereedschap en neem defect materieel uit gebruik."]},{"cat":"Werkvergunningen","items":["Een werkvergunning is nodig bij verhoogd risico: heet werk, besloten ruimten, werken aan/nabij installaties, graafwerk, hijsen.","Heet werk = werk met vonken, open vuur of hitte (lassen, slijpen, branden) → brand-/explosiegevaar.","In de vergunning staan: het werk, de locatie, de risico's, de maatregelen, de geldigheidsduur en wie verantwoordelijk is."]},{"cat":"Besloten Ruimten","items":["Grootste gevaren: zuurstoftekort en giftige of explosieve gassen — vaak niet waarneembaar.","Vóór betreden: atmosfeer meten (zuurstof én gassen), ventileren en een werkvergunning regelen.","Verplicht: een mangatwacht/buitenwacht, communicatie, een reddingsplan en de juiste PBM."]},{"cat":"Gezondheid","items":["Langdurig hard geluid geeft blijvende gehoorschade (lawaaidoofheid).","Alcohol, drugs en sommige medicijnen verminderen je alertheid en reactievermogen → groter ongevalsrisico.","Een PAGO/PMO spoort werkgerelateerde gezondheidsklachten vroegtijdig op. Let ook op UV/zon, klimaat en trillingen."]},{"cat":"Incidenten & EHBO","items":["Bij een ongeval: eerst je eigen veiligheid → situatie veilig maken → hulp alarmeren (BHV/112) → dan pas het slachtoffer helpen.","Chemische stof in het oog: minstens 15 minuten spoelen met water en medische hulp inschakelen. Brandwond: koelen met lauw water.","Een bijna-ongeval (nét geen letsel/schade) altijd melden en onderzoeken om herhaling te voorkomen. Zorg dat er BHV/EHBO aanwezig is."]}];
+</script>
+<script>
+(function(){
+  "use strict";
+  var D = window.VCA_DATA, SUM = window.VCA_SUMMARY;
+  var app = document.getElementById("app");
+  D.forEach(function(q,i){ q.id = "q"+i; });
+  var cats = []; D.forEach(function(q){ if(cats.indexOf(q.categorie)<0) cats.push(q.categorie); });
+  var PASS = 64.5;
+
+  function load(k,d){ try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;} }
+  function save(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch(e){} }
+  var prog = load("vca_prog",{});
+  var theme = load("vca_theme","light");
+  applyTheme();
+  function applyTheme(){ document.documentElement.setAttribute("data-theme",theme); document.getElementById("themeBtn").textContent = theme==="dark"?"☀️":"🌙"; }
+  document.getElementById("themeBtn").onclick=function(){ theme=theme==="dark"?"light":"dark"; save("vca_theme",theme); applyTheme(); };
+
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];}); }
+  function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+  function pct(n,d){ return d?Math.round(100*n/d):0; }
+  function sameSet(a,b){ if(a.length!==b.length) return false; var s=a.slice().sort(); var t=b.slice().sort(); return s.every(function(x,i){return x===t[i];}); }
+
+  var state={ view:"home", run:null };
+  var tabBtns=[].slice.call(document.querySelectorAll("#tabs button"));
+  tabBtns.forEach(function(b){ b.onclick=function(){ go(b.dataset.view); }; });
+  function go(v){ stopTimer(); state.view=v; tabBtns.forEach(function(b){b.classList.toggle("on",b.dataset.view===v);}); render(); window.scrollTo(0,0); }
+
+  function render(){
+    if(state.view==="home") return renderHome();
+    if(state.view==="oefen") return state.run&&state.run.mode==="oefen"?renderRun():renderOefenGate();
+    if(state.view==="examen") return state.run&&state.run.mode==="examen"?renderRun():renderExamGate();
+    if(state.view==="leer") return renderLeer();
+  }
+
+  // ---------- HOME ----------
+  function renderHome(){
+    var seen=0,corr=0,answered=0;
+    D.forEach(function(q){var p=prog[q.id]; if(p){seen+=p.seen;corr+=p.correct;answered++;}});
+    var html=""+
+    '<div class="hero">'+
+      '<div class="count"><b>'+PASS+'%</b><span>nodig om te slagen</span></div>'+
+      '<div class="herotext"><h1>Klaar voor je VCA-examen? 💪</h1>'+
+      '<p>'+D.length+' oefenvragen · '+cats.length+' onderwerpen · examen = 40 vragen in 60 min</p>'+
+      '<p class="muted" style="font-size:13px;margin-top:6px">Slagen = minstens '+PASS+'% goed (26 van de 40).</p></div>'+
+    '</div>'+
+    '<div class="grid g2">'+
+      modeCard("oefen","📚","Oefenen per onderwerp","Kies onderwerpen en oefen met directe uitleg na elke vraag.")+
+      modeCard("examen","⏱️","Examen-simulatie","40 willekeurige vragen, 60 minuten, met slaag/zak-uitslag — net als het echt.")+
+    '</div>'+
+    '<div class="grid g2" style="margin-top:14px">'+
+      modeCard("leer","📖","Leerblad","Alle vragen met antwoord en uitleg + samenvatting per onderwerp. Met overhoormodus.")+
+      '<button class="mode" id="weakBtn"'+(D.filter(isWeak).length?"":" disabled")+'><span class="em">🎯</span><b>Oefen je zwakke vragen</b><small>'+(D.filter(isWeak).length? D.filter(isWeak).length+' vragen die je eerder fout had.':'Nog geen fouten — begin met oefenen.')+'</small></button>'+
+    '</div>'+
+    '<div class="card pad" style="margin-top:18px">'+
+      '<div class="row" style="justify-content:space-between"><b>Jouw voortgang</b><button class="iconbtn" id="resetBtn">↺ Reset</button></div>'+
+      '<p class="muted" style="font-size:13px;margin:8px 0 4px">'+answered+'/'+D.length+' vragen geoefend · '+pct(corr,seen)+'% juist</p>'+
+      catBars()+
+    '</div>';
+    app.innerHTML=html;
+    [].slice.call(document.querySelectorAll("[data-mode]")).forEach(function(el){el.onclick=function(){go(el.dataset.mode);};});
+    document.getElementById("weakBtn").onclick=function(){ startRun("oefen", shuffle(D.filter(isWeak)), "Zwakke vragen"); };
+    document.getElementById("resetBtn").onclick=function(){ if(confirm("Alle voortgang wissen?")){ prog={}; save("vca_prog",prog); renderHome(); } };
+  }
+  function modeCard(v,em,t,s){ return '<button class="mode" data-mode="'+v+'"><span class="em">'+em+'</span><b>'+t+'</b><small>'+s+'</small></button>'; }
+  function isWeak(q){ var p=prog[q.id]; return p&&p.seen>0&&p.correct<p.seen; }
+  function catBars(){ var out="";
+    cats.forEach(function(c){ var qs=D.filter(function(q){return q.categorie===c;}); var seen=0,corr=0;
+      qs.forEach(function(q){var p=prog[q.id];if(p){seen+=p.seen;corr+=p.correct;}}); var p=seen?pct(corr,seen):0;
+      out+='<div class="barrow"><span class="muted" title="'+esc(c)+'">'+esc(c.length>16?c.slice(0,15)+"…":c)+'</span><div class="bar"><i style="width:'+p+'%;background:'+(seen?(p>=70?"var(--good)":p>=40?"var(--amber)":"var(--bad)"):"var(--line)")+'"></i></div><span class="muted">'+(seen?p+"%":"–")+'</span></div>';
+    }); return out;
+  }
+
+  // ---------- OEFEN GATE ----------
+  function renderOefenGate(){
+    var sel=state._oef||{cats:{},count:20,shuffle:true}; state._oef=sel;
+    var html='<div class="card pad"><h2 style="margin-top:0">Oefenen per onderwerp</h2>'+
+      '<p class="muted">Kies onderwerpen. Na elk antwoord zie je meteen of het goed was, met uitleg.</p>'+
+      '<label class="fld">Onderwerpen</label>'+
+      '<div class="row" style="margin-bottom:8px"><button class="chip sm" id="allCh">Alle</button><button class="chip sm" id="noCh">Geen</button></div>'+
+      '<div class="chips" id="chChips">'+cats.map(function(c){var n=D.filter(function(q){return q.categorie===c;}).length;
+        return '<button class="chip'+(sel.cats[c]?" on":"")+'" data-c="'+esc(c)+'">'+esc(c)+' ('+n+')</button>';}).join("")+'</div>'+
+      '<label class="fld">Aantal vragen</label>'+
+      '<div class="chips" id="cnt">'+[10,20,30,999].map(function(n){return '<button class="chip'+(sel.count===n?" on":"")+'" data-n="'+n+'">'+(n===999?"Alle":n)+'</button>';}).join("")+'</div>'+
+      '<label class="fld"><input type="checkbox" id="shuf" '+(sel.shuffle?"checked":"")+'> Willekeurige volgorde</label>'+
+      '<div class="row" style="margin-top:18px"><button class="btn" id="start">Start oefenen →</button><span class="muted" id="poolN"></span></div></div>';
+    app.innerHTML=html;
+    function pool(){ var cs=Object.keys(sel.cats).filter(function(k){return sel.cats[k];}); return D.filter(function(q){return cs.length?cs.indexOf(q.categorie)>=0:false;}); }
+    function refr(){ var n=pool().length; document.getElementById("poolN").textContent=n+" vragen"; document.getElementById("start").disabled=n===0; }
+    [].slice.call(document.querySelectorAll("#chChips .chip")).forEach(function(b){b.onclick=function(){var c=b.dataset.c;sel.cats[c]=!sel.cats[c];b.classList.toggle("on");refr();};});
+    document.getElementById("allCh").onclick=function(){cats.forEach(function(c){sel.cats[c]=true;});renderOefenGate();};
+    document.getElementById("noCh").onclick=function(){sel.cats={};renderOefenGate();};
+    [].slice.call(document.querySelectorAll("#cnt .chip")).forEach(function(b){b.onclick=function(){sel.count=+b.dataset.n;renderOefenGate();};});
+    document.getElementById("shuf").onchange=function(e){sel.shuffle=e.target.checked;};
+    document.getElementById("start").onclick=function(){var p=pool();if(sel.shuffle)p=shuffle(p);if(sel.count<p.length)p=p.slice(0,sel.count);startRun("oefen",p,"Oefenen");};
+    refr();
+  }
+
+  // ---------- EXAM GATE ----------
+  function renderExamGate(){
+    var html='<div class="card pad"><h2 style="margin-top:0">Examen-simulatie</h2>'+
+      '<p class="muted">Net als het echte B-VCA-examen:</p>'+
+      '<ul class="muted" style="margin:8px 0 16px;padding-left:20px;font-size:14px">'+
+        '<li><b>40 vragen</b> uit alle onderwerpen, willekeurig</li>'+
+        '<li><b>60 minuten</b> — de tijd loopt</li>'+
+        '<li>Geen uitleg tijdens het examen; pas de uitslag erna</li>'+
+        '<li>Slagen vanaf <b>'+PASS+'%</b> (26 van 40 goed)</li></ul>'+
+      '<button class="btn" id="startE">Start het examen ⏱️</button></div>';
+    app.innerHTML=html;
+    document.getElementById("startE").onclick=function(){ var p=shuffle(D.slice()).slice(0,Math.min(40,D.length)); startRun("examen",p,"Examen-simulatie"); };
+  }
+
+  // ---------- RUN (oefen + examen) ----------
+  function startRun(mode,items,label){
+    state.run={mode:mode,label:label,items:items,idx:0,answers:[],correct:0,wrong:[],done:false,
+      answeredThis:false, work:null, started:Date.now(), timeLeft: mode==="examen"?3600:0, timerId:null};
+    if(mode==="examen") startTimer();
+    go(mode);
+  }
+  function startTimer(){ stopTimer(); state.run.timerId=setInterval(function(){ var r=state.run; if(!r)return; r.timeLeft--; var el=document.getElementById("timer");
+      if(el){ el.textContent=fmt(r.timeLeft); el.classList.toggle("warn",r.timeLeft<=120); }
+      if(r.timeLeft<=0){ stopTimer(); submitExam(); } },1000); }
+  function stopTimer(){ if(state.run&&state.run.timerId){ clearInterval(state.run.timerId); state.run.timerId=null; } }
+  function fmt(s){ if(s<0)s=0; var m=Math.floor(s/60),x=s%60; return m+":"+("0"+x).slice(-2); }
+
+  function renderRun(){
+    var r=state.run; if(r.done) return r.mode==="examen"?renderExamResult():renderOefenResult();
+    var q=r.items[r.idx];
+    var typeLabel = q.type==="enkel"?"Eén antwoord": q.type==="meervoudig"?"Meerdere antwoorden":"Waar / niet waar";
+    var html='<div class="card pad">'+
+      '<div class="runtop"><span class="pill">'+esc(r.label)+'</span><div class="bar"><i style="width:'+pct(r.idx,r.items.length)+'%"></i></div>'+
+        (r.mode==="examen"?'<span class="timer" id="timer">'+fmt(r.timeLeft)+'</span>':'')+
+        '<span>'+(r.idx+1)+'/'+r.items.length+'</span></div>'+
+      '<div class="qtype">'+esc(q.categorie)+' · '+typeLabel+'</div>'+
+      '<div class="qtext">'+esc(q.vraag)+'</div>'+
+      (q.type==="meervoudig"?'<div class="hint">Tip: er kunnen meerdere antwoorden juist zijn.</div>':'')+
+      '<div id="ans"></div><div id="fb"></div>'+
+      '<div class="row" style="justify-content:space-between;margin-top:6px">'+
+        '<span class="muted" style="font-size:12px">'+(r.mode==="examen"?"Kies en ga verder — uitslag aan het eind.":"Antwoord en zie meteen de uitleg.")+'</span>'+
+        '<div class="row"><button class="btn ghost hide" id="checkBtn">Controleer</button><button class="btn hide" id="nextBtn">Volgende →</button></div></div></div>';
+    app.innerHTML=html;
+    if(r.mode==="examen"){ var t=document.getElementById("timer"); if(t)t.classList.toggle("warn",r.timeLeft<=120); }
+    r.answeredThis=false; r.work = q.type==="meervoudig"?[]:(q.type==="matrix"?new Array(q.stellingen.length).fill(null):null);
+    renderAnswerArea(q);
+  }
+
+  function renderAnswerArea(q){
+    var r=state.run, area=document.getElementById("ans");
+    var checkBtn=document.getElementById("checkBtn"), nextBtn=document.getElementById("nextBtn");
+
+    if(q.type==="enkel"){
+      area.innerHTML=q.opties.map(function(o,i){return '<button class="opt" data-i="'+i+'"><span class="k">'+String.fromCharCode(65+i)+'</span><span>'+esc(o)+'</span></button>';}).join("");
+      [].slice.call(area.querySelectorAll(".opt")).forEach(function(b){ b.onclick=function(){
+        var i=+b.dataset.i;
+        if(r.mode==="oefen"){ if(r.answeredThis)return; gradeEnkel(q,i); }
+        else { r.work=i; [].slice.call(area.querySelectorAll(".opt")).forEach(function(x){x.classList.toggle("sel",+x.dataset.i===i);}); showNext(); }
+      };});
+    } else if(q.type==="meervoudig"){
+      area.innerHTML=q.opties.map(function(o,i){return '<button class="opt box" data-i="'+i+'"><span class="k">☐</span><span>'+esc(o)+'</span></button>';}).join("");
+      [].slice.call(area.querySelectorAll(".opt")).forEach(function(b){ b.onclick=function(){
+        if(r.answeredThis)return; var i=+b.dataset.i; var k=r.work.indexOf(i);
+        if(k>=0){r.work.splice(k,1);b.classList.remove("sel");b.querySelector(".k").textContent="☐";}
+        else{r.work.push(i);b.classList.add("sel");b.querySelector(".k").textContent="☑";}
+        if(r.work.length){ checkBtn.classList.remove("hide"); } else checkBtn.classList.add("hide");
+      };});
+      checkBtn.classList.add("hide");
+      checkBtn.onclick=function(){ if(r.mode==="oefen") gradeMeerv(q); else { submitWork(q); } };
+      if(r.mode==="examen"){ checkBtn.textContent="Bevestig keuze"; }
+    } else { // matrix
+      area.innerHTML=q.stellingen.map(function(s,i){return '<div class="mxrow" data-i="'+i+'"><span class="t">'+esc(s.tekst)+'</span>'+
+        '<button class="mxbtn" data-w="1">Waar</button><button class="mxbtn" data-w="0">Niet waar</button></div>';}).join("");
+      [].slice.call(area.querySelectorAll(".mxrow")).forEach(function(row){ var i=+row.dataset.i;
+        [].slice.call(row.querySelectorAll(".mxbtn")).forEach(function(b){ b.onclick=function(){
+          if(r.answeredThis)return; r.work[i]=(b.dataset.w==="1");
+          [].slice.call(row.querySelectorAll(".mxbtn")).forEach(function(x){x.classList.toggle("sel",x===b);});
+          if(r.work.every(function(v){return v!==null;})) checkBtn.classList.remove("hide");
+        };});
+      });
+      checkBtn.classList.add("hide");
+      checkBtn.onclick=function(){ if(r.mode==="oefen") gradeMatrix(q); else submitWork(q); };
+      if(r.mode==="examen"){ checkBtn.textContent="Bevestig keuze"; }
+    }
+  }
+
+  function showNext(){ var nb=document.getElementById("nextBtn"); nb.classList.remove("hide");
+    nb.textContent=(state.run.idx+1>=state.run.items.length)?(state.run.mode==="examen"?"Examen afronden →":"Bekijk resultaat →"):"Volgende →";
+    nb.onclick=advance; nb.focus(); }
+  function advance(){ var r=state.run; r.idx++; if(r.idx>=r.items.length){ if(r.mode==="examen"){stopTimer();return submitExam();} r.done=true; } renderRun(); }
+
+  // grading (oefen, immediate)
+  function recordProg(q,ok){ var p=prog[q.id]||{seen:0,correct:0}; p.seen++; if(ok)p.correct++; prog[q.id]=p; save("vca_prog",prog); }
+  function gradeEnkel(q,i){ var r=state.run; r.answeredThis=true; var ok=i===q.juist;
+    var area=document.getElementById("ans");
+    [].slice.call(area.querySelectorAll(".opt")).forEach(function(b){ var bi=+b.dataset.i; b.disabled=true;
+      if(bi===q.juist)b.classList.add("correct"); else if(bi===i)b.classList.add("wrong"); });
+    finishOefen(q,ok); }
+  function gradeMeerv(q){ var r=state.run; r.answeredThis=true; var ok=sameSet(r.work,q.juist);
+    var area=document.getElementById("ans"); document.getElementById("checkBtn").classList.add("hide");
+    [].slice.call(area.querySelectorAll(".opt")).forEach(function(b){ var bi=+b.dataset.i; b.disabled=true;
+      if(q.juist.indexOf(bi)>=0)b.classList.add("correct"); else if(r.work.indexOf(bi)>=0)b.classList.add("wrong"); });
+    finishOefen(q,ok); }
+  function gradeMatrix(q){ var r=state.run; r.answeredThis=true; var ok=q.stellingen.every(function(s,i){return r.work[i]===s.waar;});
+    var area=document.getElementById("ans"); document.getElementById("checkBtn").classList.add("hide");
+    [].slice.call(area.querySelectorAll(".mxrow")).forEach(function(row){ var i=+row.dataset.i; var correctW=q.stellingen[i].waar;
+      [].slice.call(row.querySelectorAll(".mxbtn")).forEach(function(b){ b.disabled=true; var bw=b.dataset.w==="1";
+        if(bw===correctW)b.classList.add("correct"); else if(bw===r.work[i])b.classList.add("wrong"); }); });
+    finishOefen(q,ok); }
+  function finishOefen(q,ok){ var r=state.run; if(ok)r.correct++; else r.wrong.push(q); recordProg(q,ok);
+    var fb=document.getElementById("fb"); fb.className="feedback "+(ok?"ok":"no");
+    fb.innerHTML="<b>"+(ok?"Juist! ✓":"Fout.")+"</b><div class='uit'>"+esc(q.uitleg||"")+"</div>"; showNext(); }
+
+  // examen: store answer, no feedback
+  function submitWork(q){ var r=state.run; r.answers[r.idx]=r.work; r.answeredThis=true;
+    document.getElementById("checkBtn").classList.add("hide"); markExamSelected(); showNext(); }
+  function markExamSelected(){ /* keep selection visible; nothing else */ }
+
+  function submitExam(){ var r=state.run; // grade all
+    // ensure current answer captured for enkel (stored on pick) -> r.answers
+    r.correct=0; r.review=[];
+    r.items.forEach(function(q,idx){ var a=r.answers[idx]; if(a===undefined){ a = (q.type==="enkel")? (r.idx===idx?r.work:null) : a; }
+      // For enkel in examen we stored r.work only on pick; capture into answers at navigation:
+    });
+    // Recompute using answers array; for enkel we stored via advance? We store on advance below.
+    r.items.forEach(function(q,idx){ var a=r.answers[idx]; var ok=false;
+      if(q.type==="enkel") ok=(a===q.juist);
+      else if(q.type==="meervoudig") ok=Array.isArray(a)&&sameSet(a,q.juist);
+      else if(q.type==="matrix") ok=Array.isArray(a)&&q.stellingen.every(function(s,i){return a[i]===s.waar;});
+      if(ok)r.correct++; recordProg(q,ok); r.review.push({q:q,ok:ok}); });
+    r.done=true; stopTimer(); renderRun();
+  }
+
+  function renderExamResult(){
+    var r=state.run; var p=pct(r.correct,r.items.length); var pass=p>=PASS;
+    var used=3600-r.timeLeft; var html='<div class="card pad results center">'+
+      '<span class="pill '+(pass?"good":"bad")+'">'+(pass?"GESLAAGD ✓":"NIET GESLAAGD")+'</span>'+
+      '<div class="big">'+p+'%</div>'+
+      '<p style="margin:0 0 4px;font-weight:600">'+r.correct+' van '+r.items.length+' goed · grens '+PASS+'%</p>'+
+      '<p class="muted">Tijd gebruikt: '+fmt(used)+'</p>'+
+      '<div class="row" style="justify-content:center;margin:14px 0">'+
+        (r.wrongList().length?'<button class="btn" id="redo">Herhaal '+r.wrongList().length+' foute vragen</button>':'')+
+        '<button class="btn ghost" id="again">Nieuw examen</button><button class="btn ghost" id="home">Naar start</button></div>'+
+      '<details class="acc" style="text-align:left;margin-top:8px"><summary><span class="n">📋</span>Bekijk je antwoorden</summary><div class="body">'+
+        r.review.map(function(x,i){return '<div class="lq"><div class="v">'+(x.ok?"✅":"❌")+' '+(i+1)+'. '+esc(x.q.vraag)+'</div><div class="a">'+esc(answerText(x.q))+'</div><div class="u">'+esc(x.q.uitleg||"")+'</div></div>';}).join("")+
+      '</div></details></div>';
+    app.innerHTML=html;
+    var rd=document.getElementById("redo"); if(rd)rd.onclick=function(){ startRun("oefen",shuffle(r.wrongList()),"Foute examenvragen"); };
+    document.getElementById("again").onclick=function(){ state.run=null; renderExamGate(); };
+    document.getElementById("home").onclick=function(){ state.run=null; go("home"); };
+  }
+  // helper to get wrong list from review
+  function attachWrong(r){ r.wrongList=function(){ return (r.review||[]).filter(function(x){return !x.ok;}).map(function(x){return x.q;}); }; }
+
+  function renderOefenResult(){
+    var r=state.run; var p=pct(r.correct,r.items.length); var msg=p>=80?"Sterk! 🎉":p>=60?"Goed bezig 👍":"Blijf oefenen 💪";
+    var html='<div class="card pad results center"><span class="pill">'+esc(r.label)+'</span><div class="big">'+p+'%</div>'+
+      '<p style="font-weight:600;margin:0 0 4px">'+msg+'</p><p class="muted">'+r.correct+' van '+r.items.length+' juist</p>'+
+      '<div class="row" style="justify-content:center;margin-top:14px">'+
+        (r.wrong.length?'<button class="btn" id="redo">Herhaal '+r.wrong.length+' foute vragen</button>':'')+
+        '<button class="btn ghost" id="again">Nieuwe oefenset</button><button class="btn ghost" id="home">Naar start</button></div></div>';
+    app.innerHTML=html;
+    var rd=document.getElementById("redo"); if(rd)rd.onclick=function(){ startRun("oefen",shuffle(r.wrong),"Foute vragen"); };
+    document.getElementById("again").onclick=function(){ state.run=null; renderOefenGate(); };
+    document.getElementById("home").onclick=function(){ state.run=null; go("home"); };
+  }
+
+  function answerText(q){ if(q.type==="enkel") return "Juist: "+q.opties[q.juist];
+    if(q.type==="meervoudig") return "Juist: "+q.juist.map(function(i){return q.opties[i];}).join(" · ");
+    return q.stellingen.map(function(s){return (s.waar?"Waar":"Niet waar")+": "+s.tekst;}).join("  |  "); }
+
+  // ---------- LEERBLAD ----------
+  function renderLeer(){
+    var q=state._lq||""; var over=state._over||false;
+    var html='<div class="card pad" style="margin-bottom:14px"><h2 style="margin:0 0 8px">Leerblad</h2>'+
+      '<input type="search" id="ls" placeholder="Zoek… (bv. harnas, branddriehoek, LMRA)" value="'+esc(q)+'" style="width:100%">'+
+      '<div class="row" style="margin-top:10px"><button class="chip sm" id="over">'+(over?"Overhoormodus: AAN":"Overhoormodus: uit")+'</button>'+
+      '<button class="chip sm" id="openAll">Alles openen</button><button class="chip sm" id="closeAll">Alles sluiten</button></div>'+
+      (over?'<p class="muted" style="font-size:12px;margin:8px 0 0">Antwoorden zijn vervaagd — klik op een vraag om het antwoord te tonen.</p>':'')+
+      '</div><div id="ll">'+leerList(q,over)+'</div>';
+    app.innerHTML=html;
+    var ls=document.getElementById("ls");
+    ls.oninput=function(){ state._lq=ls.value; document.getElementById("ll").innerHTML=leerList(ls.value,state._over); bindReveal(); ls.focus(); };
+    document.getElementById("over").onclick=function(){ state._over=!state._over; renderLeer(); };
+    document.getElementById("openAll").onclick=function(){ [].slice.call(document.querySelectorAll(".acc")).forEach(function(d){d.open=true;}); };
+    document.getElementById("closeAll").onclick=function(){ [].slice.call(document.querySelectorAll(".acc")).forEach(function(d){d.open=false;}); };
+    bindReveal();
+  }
+  function bindReveal(){ [].slice.call(document.querySelectorAll(".lq")).forEach(function(el){ el.onclick=function(){ el.classList.toggle("reveal"); }; }); }
+  function leerList(query,over){
+    var Q=query.trim().toLowerCase(); var out="";
+    cats.forEach(function(c,ci){
+      var qs=D.filter(function(q){return q.categorie===c;});
+      var sum=(SUM.find?SUM.find(function(s){return s.cat===c;}):null);
+      // filter
+      var fqs=qs.filter(function(q){ if(!Q)return true; return q.vraag.toLowerCase().indexOf(Q)>=0 || (q.uitleg||"").toLowerCase().indexOf(Q)>=0 || c.toLowerCase().indexOf(Q)>=0 || answerText(q).toLowerCase().indexOf(Q)>=0; });
+      var sumHit = sum && sum.items.some(function(it){return !Q||it.toLowerCase().indexOf(Q)>=0;});
+      if(!fqs.length && !(Q&&sumHit)) { if(Q) return; if(!fqs.length) return; }
+      if(Q && !fqs.length && !sumHit) return;
+      var body="";
+      if(sum){ var sit=sum.items.filter(function(it){return !Q||it.toLowerCase().indexOf(Q)>=0||c.toLowerCase().indexOf(Q)>=0;});
+        if(sit.length){ body+='<h4>Kernpunten</h4><ul>'+sit.map(function(it){return '<li>'+hl(esc(it),Q)+'</li>';}).join("")+'</ul>'; } }
+      if(fqs.length){ body+='<h4>Vragen &amp; antwoorden</h4>'+fqs.map(function(q){
+        return '<div class="lq'+(over?" blur":"")+'"><div class="v">'+hl(esc(q.vraag),Q)+'</div><div class="a">'+hl(esc(answerText(q)),Q)+'</div><div class="u">'+hl(esc(q.uitleg||""),Q)+'</div></div>';
+      }).join(""); }
+      if(!body) return;
+      out+='<details class="acc"'+(Q?" open":"")+'><summary><span class="n">'+(ci+1)+'</span>'+esc(c)+' <span class="muted" style="font-weight:500;font-size:12px">('+qs.length+')</span></summary><div class="body">'+body+'</div></details>';
+    });
+    return out||'<p class="muted center">Geen resultaten.</p>';
+  }
+  function hl(t,q){ if(!q)return t; try{var re=new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig");return t.replace(re,"<mark>$1</mark>");}catch(e){return t;} }
+
+  // patch: ensure enkel answers captured for examen on advance, and exam wrongList attached
+  var _advance=advance;
+  advance=function(){ var r=state.run; if(r&&r.mode==="examen"){ var q=r.items[r.idx];
+      if(q.type==="enkel") r.answers[r.idx]=r.work; else if(r.answers[r.idx]===undefined) r.answers[r.idx]=r.work; }
+    _advance(); };
+  var _submitExam=submitExam;
+  submitExam=function(){ attachWrong(state.run); // capture current enkel answer if on last
+      var r=state.run; var q=r.items[r.idx]; if(q&&r.answers[r.idx]===undefined) r.answers[r.idx]=r.work;
+      _submitExam(); };
+
+  document.addEventListener("keydown",function(e){ /* reserved */ });
+  render();
+})();
+</script>
+<footer class="wrap" style="padding-top:0">VCA-oefentool · 88 vragen over 14 onderwerpen · oefen tot je slaagt!</footer>
+</body>
+</html>
