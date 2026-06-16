@@ -11,6 +11,7 @@
     --oranje: #f5a623;
     --oranje-dark: #d98a0b;
     --donker: #1a1a1a;
+    --blauw: #2f6cf0;
     --groen: #2e9e4f;
     --rood: #d64545;
     --grijs: #f2f2f2;
@@ -32,7 +33,6 @@
     flex-direction: column;
     box-shadow: 0 0 20px rgba(0,0,0,0.08);
   }
-  /* ---------- Topbar ---------- */
   .topbar {
     background: var(--donker);
     color: #fff;
@@ -44,96 +44,48 @@
     top: 0;
     z-index: 10;
   }
-  .topbar .brand {
-    font-weight: 800;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-  }
+  .topbar .brand { font-weight: 800; font-size: 16px; letter-spacing: 0.5px; }
   .topbar .brand span { color: var(--oranje); }
   .topbar .timer {
-    font-size: 14px;
-    background: rgba(255,255,255,0.12);
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-variant-numeric: tabular-nums;
+    font-size: 14px; background: rgba(255,255,255,0.12);
+    padding: 5px 10px; border-radius: 20px; font-variant-numeric: tabular-nums;
   }
   .progresswrap { height: 6px; background: var(--grijs); }
   .progressbar { height: 100%; width: 0%; background: var(--oranje); transition: width .3s; }
 
-  /* ---------- Content ---------- */
   .content { flex: 1; padding: 22px 18px 30px; }
 
-  /* ---------- Start screen ---------- */
-  .hero { text-align: center; padding: 24px 6px; }
+  .hero { text-align: center; padding: 18px 6px; }
   .hero .badge {
-    display: inline-block;
-    background: var(--oranje);
-    color: #fff;
-    font-weight: 700;
-    font-size: 12px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-    margin-bottom: 18px;
+    display: inline-block; background: var(--oranje); color: #fff; font-weight: 700;
+    font-size: 12px; padding: 6px 14px; border-radius: 20px; letter-spacing: 1px; margin-bottom: 18px;
   }
   .hero h1 { font-size: 24px; margin: 0 0 8px; line-height: 1.25; }
   .hero p { color: #555; font-size: 14px; line-height: 1.5; margin: 0 auto 8px; max-width: 380px; }
-  .infogrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin: 22px 0;
-  }
-  .infocard {
-    background: var(--grijs);
-    border-radius: 12px;
-    padding: 14px;
-    text-align: center;
-  }
+  .infogrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 22px 0; }
+  .infocard { background: var(--grijs); border-radius: 12px; padding: 14px; text-align: center; }
   .infocard .big { font-size: 22px; font-weight: 800; color: var(--oranje-dark); }
   .infocard .lbl { font-size: 12px; color: #666; margin-top: 2px; }
   .topiclist { text-align: left; margin: 18px auto; max-width: 380px; }
   .topiclist li { margin: 6px 0; font-size: 14px; color: #444; }
 
-  /* ---------- Question ---------- */
   .qmeta { font-size: 13px; color: #888; margin-bottom: 6px; display: flex; justify-content: space-between; }
   .qmeta .cat { color: var(--oranje-dark); font-weight: 700; }
   .qtext { font-size: 18px; font-weight: 600; line-height: 1.4; margin: 0 0 6px; }
-  .qsub { font-size: 13px; color: #777; margin: 0 0 16px; }
   .formula {
-    display: inline-block;
-    background: var(--grijs);
-    border: 1px solid var(--rand);
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-style: italic;
-    margin: 4px 0 14px;
-    font-size: 15px;
+    display: inline-block; background: var(--grijs); border: 1px solid var(--rand);
+    border-radius: 8px; padding: 6px 12px; font-style: italic; margin: 4px 0 14px; font-size: 15px;
   }
   .options { display: flex; flex-direction: column; gap: 12px; }
   .option {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border: 2px solid var(--rand);
-    border-radius: 14px;
-    padding: 15px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    background: #fff;
-    transition: all .15s;
-    user-select: none;
+    display: flex; align-items: center; gap: 12px; border: 2px solid var(--rand);
+    border-radius: 14px; padding: 15px 16px; font-size: 16px; cursor: pointer;
+    background: #fff; transition: all .15s; user-select: none;
   }
   .option:active { transform: scale(0.99); }
   .option .letter {
-    flex: 0 0 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: var(--grijs);
-    color: #444;
-    font-weight: 800;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
+    flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--grijs);
+    color: #444; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 14px;
   }
   .option.selected { border-color: var(--oranje); background: #fff7ec; }
   .option.selected .letter { background: var(--oranje); color: #fff; }
@@ -144,38 +96,18 @@
   .option.disabled { cursor: default; }
 
   .explain {
-    margin-top: 16px;
-    background: #fff7ec;
-    border-left: 4px solid var(--oranje);
-    border-radius: 8px;
-    padding: 12px 14px;
-    font-size: 14px;
-    line-height: 1.5;
-    display: none;
+    margin-top: 16px; background: #fff7ec; border-left: 4px solid var(--oranje);
+    border-radius: 8px; padding: 12px 14px; font-size: 14px; line-height: 1.5; display: none;
   }
   .explain.show { display: block; }
   .explain b { color: var(--oranje-dark); }
 
-  /* ---------- Footer buttons ---------- */
   .footer {
     padding: 14px 18px calc(14px + env(safe-area-inset-bottom));
-    border-top: 1px solid var(--rand);
-    display: flex;
-    gap: 10px;
-    background: #fff;
-    position: sticky;
-    bottom: 0;
+    border-top: 1px solid var(--rand); display: flex; gap: 10px; background: #fff;
+    position: sticky; bottom: 0;
   }
-  .btn {
-    flex: 1;
-    border: none;
-    border-radius: 12px;
-    padding: 16px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all .15s;
-  }
+  .btn { flex: 1; border: none; border-radius: 12px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all .15s; }
   .btn:active { transform: scale(0.98); }
   .btn-primary { background: var(--oranje); color: #fff; }
   .btn-primary:disabled { background: #f0d9af; cursor: not-allowed; }
@@ -183,15 +115,10 @@
   .btn-dark { background: var(--donker); color: #fff; }
   .btn-full { width: 100%; flex: none; }
 
-  /* ---------- Result ---------- */
   .result { text-align: center; padding: 10px 4px; }
   .scorering {
-    width: 150px; height: 150px;
-    border-radius: 50%;
-    margin: 10px auto 18px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    color: #fff;
+    width: 150px; height: 150px; border-radius: 50%; margin: 10px auto 18px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;
   }
   .scorering .pct { font-size: 38px; font-weight: 800; line-height: 1; }
   .scorering .sub { font-size: 13px; opacity: 0.9; margin-top: 4px; }
@@ -199,13 +126,7 @@
   .verdict.pass { color: var(--groen); }
   .verdict.fail { color: var(--rood); }
   .reviewlist { text-align: left; margin-top: 20px; }
-  .reviewitem {
-    border: 1px solid var(--rand);
-    border-radius: 12px;
-    padding: 12px 14px;
-    margin-bottom: 10px;
-    font-size: 14px;
-  }
+  .reviewitem { border: 1px solid var(--rand); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; font-size: 14px; }
   .reviewitem .rq { font-weight: 600; margin-bottom: 6px; }
   .reviewitem .tag { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 12px; }
   .tag.ok { background: #eafaef; color: var(--groen); }
@@ -213,378 +134,465 @@
   .reviewitem .ra { margin-top: 6px; color: #555; }
   .reviewitem .ra b { color: var(--groen); }
   .hidden { display: none !important; }
-  .flagnote { font-size: 12px; color: #999; text-align: center; margin-top: 10px; }
+
+  /* ---------- Study / diagrams ---------- */
+  .studyhead { text-align: center; margin-bottom: 14px; }
+  .studyhead h2 { font-size: 20px; margin: 0 0 4px; }
+  .studyhead p { font-size: 13px; color: #666; margin: 0; }
+  .studycard { border: 1px solid var(--rand); border-radius: 14px; padding: 14px; margin-bottom: 16px; background: #fff; }
+  .studycard .tagcat { font-size: 11px; font-weight: 700; color: var(--oranje-dark); text-transform: uppercase; letter-spacing: .5px; }
+  .studycard h3 { font-size: 16px; margin: 2px 0 4px; color: var(--donker); }
+  .studycard p { font-size: 13px; color: #555; line-height: 1.5; margin: 8px 0 0; }
+  .studycard .diag { width: 100%; height: auto; display: block; margin: 8px 0; background: #fcfcff; border: 1px solid #eef0f5; border-radius: 8px; }
+  .diagrow { display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch; justify-content: center; }
+  .diagrow .col { flex: 1 1 150px; min-width: 150px; }
+  .diagrow .cap { text-align: center; font-size: 11px; color: #888; margin-top: 0; }
+  .keyformula { background: #fff7ec; border: 1px solid #f3d39a; border-radius: 8px; padding: 9px 10px; font-style: italic; font-size: 14px; margin-top: 10px; text-align: center; }
+  .keyformula b { font-style: normal; color: var(--oranje-dark); }
 </style>
 </head>
 <body>
+
+<!-- Globale pijlpunten (markers) voor alle SVG-tekeningen -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <marker id="mD" markerWidth="11" markerHeight="11" refX="8" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8.5,3.5 L0,7 Z" fill="#1a1a1a"/></marker>
+  <marker id="mO" markerWidth="11" markerHeight="11" refX="8" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8.5,3.5 L0,7 Z" fill="#f5a623"/></marker>
+  <marker id="mB" markerWidth="11" markerHeight="11" refX="8" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8.5,3.5 L0,7 Z" fill="#2f6cf0"/></marker>
+  <marker id="mG" markerWidth="11" markerHeight="11" refX="8" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8.5,3.5 L0,7 Z" fill="#2e9e4f"/></marker>
+  <marker id="mGray" markerWidth="11" markerHeight="11" refX="8" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8.5,3.5 L0,7 Z" fill="#999"/></marker>
+  <marker id="mDim" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L7,3 L0,6 Z" fill="#666"/></marker>
+</defs></svg>
+
 <div class="app">
   <div class="topbar">
     <div class="brand">VCA<span>·</span>OEFEN</div>
     <div class="timer" id="timer">00:00</div>
   </div>
   <div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
   <div class="content" id="content"></div>
-
   <div class="footer" id="footer"></div>
 </div>
 
 <script>
 /* ============================================================
-   VRAGEN — gebaseerd op lesaantekeningen wisselstroom & driefasen
-   answer = index van juiste optie (0-based)
+   QUIZVRAGEN
    ============================================================ */
 const QUESTIONS = [
-  {
-    cat: "Frequentie",
-    q: "Een sinusvormige spanning heeft een frequentie van 50 Hz. Wat is de periode T?",
-    formula: "T = 1 / f",
-    options: ["0,02 s (20 ms)", "0,05 s (50 ms)", "2 s"],
-    answer: 0,
-    explain: "T = 1/f = 1/50 = 0,02 s = 20 ms."
-  },
-  {
-    cat: "Frequentie",
-    q: "Wat betekent de frequentie van een periodiek signaal?",
-    options: [
-      "Het aantal periodes per seconde",
-      "De hoogste spanning die voorkomt",
-      "De tijd die één periode duurt"
-    ],
-    answer: 0,
-    explain: "Frequentie = aantal periodes per seconde, eenheid hertz (Hz). De duur van één periode is de periode T."
-  },
-  {
-    cat: "Topwaarde",
-    q: "De topwaarde van een spanning is Um = 325 V. Hoe groot is de piek-piekwaarde Utt?",
-    options: ["650 V", "230 V", "162,5 V"],
-    answer: 0,
-    explain: "Utt = 2 × Um = 2 × 325 = 650 V."
-  },
-  {
-    cat: "Effectieve waarde",
-    q: "Een spanning heeft topwaarde Um = 325 V. Wat is de effectieve waarde Ueff?",
-    formula: "Ueff = Um / √2",
-    options: ["≈ 230 V", "≈ 460 V", "≈ 325 V"],
-    answer: 0,
-    explain: "Ueff = Um/√2 = 325/1,414 ≈ 230 V. Dit is de gewone netspanning."
-  },
-  {
-    cat: "Effectieve waarde",
-    q: "Een wisselspanning heeft Ueff = 230 V. Hoe groot is de topwaarde Um?",
-    formula: "Um = Ueff × √2",
-    options: ["≈ 325 V", "≈ 163 V", "≈ 460 V"],
-    answer: 0,
-    explain: "Um = Ueff × √2 = 230 × 1,414 ≈ 325 V."
-  },
-  {
-    cat: "Ideale weerstand",
-    q: "Bij een ideale weerstand: wat is het faseverschil tussen spanning en stroom?",
-    options: ["0° — U en I zijn in fase", "90° — stroom loopt na", "90° — stroom loopt voor"],
-    answer: 0,
-    explain: "Een ideale weerstand heeft geen L en geen C, daarom zijn spanning en stroom in fase (φ = 0°)."
-  },
-  {
-    cat: "Ideale weerstand",
-    q: "Een ideale weerstand R = 100 Ω staat op Ueff = 230 V. Hoe groot is Ieff?",
-    formula: "I = U / R",
-    options: ["2,3 A", "23 A", "0,43 A"],
-    answer: 0,
-    explain: "Ieff = U/R = 230/100 = 2,3 A."
-  },
-  {
-    cat: "Ideale spoel",
-    q: "Bij een ideale spoel: hoe gedraagt de stroom zich ten opzichte van de spanning?",
-    options: [
-      "De stroom loopt 90° NA op de spanning",
-      "De stroom loopt 90° VOOR op de spanning",
-      "Stroom en spanning zijn in fase"
-    ],
-    answer: 0,
-    explain: "Bij een ideale spoel naijlt (loopt na) de stroom 90° op de spanning. Ezelsbruggetje: bij een spoeL Loopt de stroom achter."
-  },
-  {
-    cat: "Ideale spoel",
-    q: "Een ideale spoel L = 0,2 H zit op f = 50 Hz. Wat is de reactantie XL?",
-    formula: "XL = ω·L = 2·π·f·L",
-    options: ["≈ 62,8 Ω", "≈ 31,4 Ω", "≈ 6,28 Ω"],
-    answer: 0,
-    explain: "XL = 2·π·f·L = 2·π·50·0,2 ≈ 62,8 Ω."
-  },
-  {
-    cat: "Ideale condensator",
-    q: "Bij een ideale condensator: hoe gedraagt de stroom zich ten opzichte van de spanning?",
-    options: [
-      "De stroom loopt 90° VOOR op de spanning",
-      "De stroom loopt 90° NA op de spanning",
-      "Stroom en spanning zijn in fase"
-    ],
-    answer: 0,
-    explain: "Bij een ideale condensator ijlt de stroom 90° VOOR op de spanning (vooruit)."
-  },
-  {
-    cat: "Ideale condensator",
-    q: "Een ideale condensator C = 50 µF zit op f = 50 Hz. Wat is de reactantie XC?",
-    formula: "XC = 1 / (ω·C) = 1 / (2·π·f·C)",
-    options: ["≈ 63,7 Ω", "≈ 6,37 Ω", "≈ 637 Ω"],
-    answer: 0,
-    explain: "XC = 1/(2·π·50·50·10⁻⁶) ≈ 63,7 Ω."
-  },
-  {
-    cat: "RL-kring",
-    q: "In een serie RL-kring is UR = 80 V en UL = 60 V. Hoe groot is de totale spanning U?",
-    formula: "U² = UR² + UL²",
-    options: ["100 V", "140 V", "70 V"],
-    answer: 0,
-    explain: "U = √(80² + 60²) = √(6400+3600) = √10000 = 100 V (stelling van Pythagoras)."
-  },
-  {
-    cat: "RL-kring",
-    q: "Gegeven U = 230 V en UR = 150 V in een RL-kring. Hoe groot is UL?",
-    formula: "UL = √(U² − UR²)",
-    options: ["≈ 174 V", "≈ 80 V", "≈ 380 V"],
-    answer: 0,
-    explain: "UL = √(230² − 150²) = √(52900 − 22500) = √30400 ≈ 174,4 V."
-  },
-  {
-    cat: "Driefasen — ster",
-    q: "Een sterschakeling heeft fasespanning Uf = 230 V. Wat is de lijnspanning UL?",
-    formula: "UL = √3 × Uf",
-    options: ["≈ 400 V", "≈ 230 V", "≈ 133 V"],
-    answer: 0,
-    explain: "UL = √3 × Uf = 1,732 × 230 ≈ 398 V ≈ 400 V. Daarom: 3×400V net = 230V per fase."
-  },
-  {
-    cat: "Driefasen — ster",
-    q: "Een driefasennet heeft lijnspanning UL = 400 V (sterschakeling). Wat is de fasespanning Uf?",
-    formula: "Uf = UL / √3",
-    options: ["≈ 230 V", "≈ 693 V", "≈ 400 V"],
-    answer: 0,
-    explain: "Uf = UL/√3 = 400/1,732 ≈ 230,9 V."
-  },
-  {
-    cat: "Driefasen — ster",
-    q: "Welke verhouding geldt voor de STROOM in een sterschakeling?",
-    options: [
-      "IL = If  (lijnstroom = fasestroom)",
-      "IL = √3 × If",
-      "IL = If / √3"
-    ],
-    answer: 0,
-    explain: "In ster: IL = If. Voor de spanning geldt daar UL = √3 × Uf."
-  },
-  {
-    cat: "Driefasen — driehoek",
-    q: "Welke verhoudingen gelden voor een DRIEHOEKschakeling?",
-    options: [
-      "UL = Uf  en  IL = √3 × If",
-      "UL = √3 × Uf  en  IL = If",
-      "UL = Uf  en  IL = If"
-    ],
-    answer: 0,
-    explain: "In driehoek is de lijnspanning gelijk aan de fasespanning (UL = Uf) en de lijnstroom IL = √3 × If. Dit is precies omgekeerd aan ster."
-  },
-  {
-    cat: "Driefasen — ster",
-    q: "Een driefasenmotor in ster heeft fasestroom If = 10 A. Hoe groot is de lijnstroom IL?",
-    options: ["10 A", "17,3 A", "5,8 A"],
-    answer: 0,
-    explain: "In sterschakeling is IL = If = 10 A."
-  },
-  {
-    cat: "Herkennen",
-    q: "Hoe herken je een STERschakeling aan het schema?",
-    options: [
-      "De drie wikkelingen komen samen in een gemeenschappelijk nulpunt (N)",
-      "De drie wikkelingen vormen een gesloten driehoek zonder nulpunt",
-      "Er zijn maar twee wikkelingen aangesloten"
-    ],
-    answer: 0,
-    explain: "Ster = sterpunt/nulpunt (N) waar de drie fasen samenkomen. Driehoek = wikkelingen in een gesloten lus, geen nulpunt."
-  },
-  {
-    cat: "Examenvraag",
-    q: "Een symmetrische sterbelasting op 3×400V+N heeft R = 40 Ω per fase. Hoe groot is de fasestroom If?",
-    formula: "Uf = 400/√3 ≈ 231 V ;  If = Uf / R",
-    options: ["≈ 5,8 A", "≈ 10 A", "≈ 17,3 A"],
-    answer: 0,
-    explain: "Uf = 400/√3 ≈ 231 V, dus If = 231/40 ≈ 5,77 A. In ster is IL ook ≈ 5,77 A."
-  }
+  { cat:"Frequentie", q:"Een sinusvormige spanning heeft een frequentie van 50 Hz. Wat is de periode T?",
+    formula:"T = 1 / f", options:["0,02 s (20 ms)","0,05 s (50 ms)","2 s"], answer:0,
+    explain:"T = 1/f = 1/50 = 0,02 s = 20 ms." },
+  { cat:"Frequentie", q:"Wat betekent de frequentie van een periodiek signaal?",
+    options:["Het aantal periodes per seconde","De hoogste spanning die voorkomt","De tijd die één periode duurt"], answer:0,
+    explain:"Frequentie = aantal periodes per seconde, eenheid hertz (Hz). De duur van één periode is de periode T." },
+  { cat:"Topwaarde", q:"De topwaarde van een spanning is Um = 325 V. Hoe groot is de piek-piekwaarde Utt?",
+    options:["650 V","230 V","162,5 V"], answer:0, explain:"Utt = 2 × Um = 2 × 325 = 650 V." },
+  { cat:"Effectieve waarde", q:"Een spanning heeft topwaarde Um = 325 V. Wat is de effectieve waarde Ueff?",
+    formula:"Ueff = Um / √2", options:["≈ 230 V","≈ 460 V","≈ 325 V"], answer:0,
+    explain:"Ueff = Um/√2 = 325/1,414 ≈ 230 V. Dit is de gewone netspanning." },
+  { cat:"Effectieve waarde", q:"Een wisselspanning heeft Ueff = 230 V. Hoe groot is de topwaarde Um?",
+    formula:"Um = Ueff × √2", options:["≈ 325 V","≈ 163 V","≈ 460 V"], answer:0,
+    explain:"Um = Ueff × √2 = 230 × 1,414 ≈ 325 V." },
+  { cat:"Ideale weerstand", q:"Bij een ideale weerstand: wat is het faseverschil tussen spanning en stroom?",
+    options:["0° — U en I zijn in fase","90° — stroom loopt na","90° — stroom loopt voor"], answer:0,
+    explain:"Een ideale weerstand heeft geen L en geen C, daarom zijn spanning en stroom in fase (φ = 0°)." },
+  { cat:"Ideale weerstand", q:"Een ideale weerstand R = 100 Ω staat op Ueff = 230 V. Hoe groot is Ieff?",
+    formula:"I = U / R", options:["2,3 A","23 A","0,43 A"], answer:0, explain:"Ieff = U/R = 230/100 = 2,3 A." },
+  { cat:"Ideale spoel", q:"Bij een ideale spoel: hoe gedraagt de stroom zich ten opzichte van de spanning?",
+    options:["De stroom loopt 90° NA op de spanning","De stroom loopt 90° VOOR op de spanning","Stroom en spanning zijn in fase"], answer:0,
+    explain:"Bij een ideale spoel naijlt (loopt na) de stroom 90° op de spanning. Ezelsbruggetje: bij een spoeL Loopt de stroom achter." },
+  { cat:"Ideale spoel", q:"Een ideale spoel L = 0,2 H zit op f = 50 Hz. Wat is de reactantie XL?",
+    formula:"XL = ω·L = 2·π·f·L", options:["≈ 62,8 Ω","≈ 31,4 Ω","≈ 6,28 Ω"], answer:0,
+    explain:"XL = 2·π·f·L = 2·π·50·0,2 ≈ 62,8 Ω." },
+  { cat:"Ideale condensator", q:"Bij een ideale condensator: hoe gedraagt de stroom zich ten opzichte van de spanning?",
+    options:["De stroom loopt 90° VOOR op de spanning","De stroom loopt 90° NA op de spanning","Stroom en spanning zijn in fase"], answer:0,
+    explain:"Bij een ideale condensator ijlt de stroom 90° VOOR op de spanning (vooruit)." },
+  { cat:"Ideale condensator", q:"Een ideale condensator C = 50 µF zit op f = 50 Hz. Wat is de reactantie XC?",
+    formula:"XC = 1 / (ω·C) = 1 / (2·π·f·C)", options:["≈ 63,7 Ω","≈ 6,37 Ω","≈ 637 Ω"], answer:0,
+    explain:"XC = 1/(2·π·50·50·10⁻⁶) ≈ 63,7 Ω." },
+  { cat:"RL-kring", q:"In een serie RL-kring is UR = 80 V en UL = 60 V. Hoe groot is de totale spanning U?",
+    formula:"U² = UR² + UL²", options:["100 V","140 V","70 V"], answer:0,
+    explain:"U = √(80² + 60²) = √(6400+3600) = √10000 = 100 V (stelling van Pythagoras)." },
+  { cat:"RL-kring", q:"Gegeven U = 230 V en UR = 150 V in een RL-kring. Hoe groot is UL?",
+    formula:"UL = √(U² − UR²)", options:["≈ 174 V","≈ 80 V","≈ 380 V"], answer:0,
+    explain:"UL = √(230² − 150²) = √(52900 − 22500) = √30400 ≈ 174,4 V." },
+  { cat:"Driefasen — ster", q:"Een sterschakeling heeft fasespanning Uf = 230 V. Wat is de lijnspanning UL?",
+    formula:"UL = √3 × Uf", options:["≈ 400 V","≈ 230 V","≈ 133 V"], answer:0,
+    explain:"UL = √3 × Uf = 1,732 × 230 ≈ 398 V ≈ 400 V. Daarom: 3×400V net = 230V per fase." },
+  { cat:"Driefasen — ster", q:"Een driefasennet heeft lijnspanning UL = 400 V (sterschakeling). Wat is de fasespanning Uf?",
+    formula:"Uf = UL / √3", options:["≈ 230 V","≈ 693 V","≈ 400 V"], answer:0,
+    explain:"Uf = UL/√3 = 400/1,732 ≈ 230,9 V." },
+  { cat:"Driefasen — ster", q:"Welke verhouding geldt voor de STROOM in een sterschakeling?",
+    options:["IL = If  (lijnstroom = fasestroom)","IL = √3 × If","IL = If / √3"], answer:0,
+    explain:"In ster: IL = If. Voor de spanning geldt daar UL = √3 × Uf." },
+  { cat:"Driefasen — driehoek", q:"Welke verhoudingen gelden voor een DRIEHOEKschakeling?",
+    options:["UL = Uf  en  IL = √3 × If","UL = √3 × Uf  en  IL = If","UL = Uf  en  IL = If"], answer:0,
+    explain:"In driehoek is de lijnspanning gelijk aan de fasespanning (UL = Uf) en de lijnstroom IL = √3 × If. Dit is precies omgekeerd aan ster." },
+  { cat:"Driefasen — ster", q:"Een driefasenmotor in ster heeft fasestroom If = 10 A. Hoe groot is de lijnstroom IL?",
+    options:["10 A","17,3 A","5,8 A"], answer:0, explain:"In sterschakeling is IL = If = 10 A." },
+  { cat:"Herkennen", q:"Hoe herken je een STERschakeling aan het schema?",
+    options:["De drie wikkelingen komen samen in een gemeenschappelijk nulpunt (N)","De drie wikkelingen vormen een gesloten driehoek zonder nulpunt","Er zijn maar twee wikkelingen aangesloten"], answer:0,
+    explain:"Ster = sterpunt/nulpunt (N) waar de drie fasen samenkomen. Driehoek = wikkelingen in een gesloten lus, geen nulpunt." },
+  { cat:"Examenvraag", q:"Een symmetrische sterbelasting op 3×400V+N heeft R = 40 Ω per fase. Hoe groot is de fasestroom If?",
+    formula:"Uf = 400/√3 ≈ 231 V ;  If = Uf / R", options:["≈ 5,8 A","≈ 10 A","≈ 17,3 A"], answer:0,
+    explain:"Uf = 400/√3 ≈ 231 V, dus If = 231/40 ≈ 5,77 A. In ster is IL ook ≈ 5,77 A." }
 ];
 
 /* ============================================================
-   LOGICA
+   SVG-HULPFUNCTIES
    ============================================================ */
-let state = {
-  idx: 0,
-  answers: new Array(QUESTIONS.length).fill(null),
-  started: false,
-  startTime: null,
-  timerInt: null,
-  finished: false
-};
+function sinePath(x0,x1,cy,amp,periods,phaseDeg,steps){
+  steps = steps || 160; const ph = phaseDeg*Math.PI/180; let d='';
+  for(let s=0;s<=steps;s++){
+    const tt = s/steps, x = x0+(x1-x0)*tt, y = cy - amp*Math.sin(2*Math.PI*periods*tt + ph);
+    d += (s?'L':'M') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+  }
+  return d.trim();
+}
+function ar(x1,y1,x2,y2,col,mk,w){ return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${w||2.6}" marker-end="url(#${mk})"/>`; }
+function dim(x1,y1,x2,y2){ return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#666" stroke-width="1.4" marker-start="url(#mDim)" marker-end="url(#mDim)"/>`; }
+function ln(x1,y1,x2,y2,col,w,dash){ return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col||'#1a1a1a'}" stroke-width="${w||2}"${dash?` stroke-dasharray="${dash}"`:''}/>`; }
+function t(x,y,s,o){ o=o||{}; return `<text x="${x}" y="${y}" font-size="${o.size||12}" fill="${o.color||'#222'}" text-anchor="${o.anchor||'start'}" font-weight="${o.weight||'normal'}" font-style="${o.style||'normal'}">${s}</text>`; }
+function dot(x,y,col,r){ return `<circle cx="${x}" cy="${y}" r="${r||4}" fill="${col||'#1a1a1a'}"/>`; }
+function arcPts(cx,cy,r,a0,a1,col,w){
+  let d=''; const n=28;
+  for(let k=0;k<=n;k++){ const a=(a0+(a1-a0)*k/n)*Math.PI/180, x=cx+r*Math.cos(a), y=cy-r*Math.sin(a); d+=(k?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)+' '; }
+  return `<path d="${d.trim()}" fill="none" stroke="${col||'#666'}" stroke-width="${w||1.6}"/>`;
+}
+function legend(x,y,col,label){ return ln(x,y,x+18,y,col,3) + t(x+23,y+4,label,{size:11,color:col,weight:'bold'}); }
+const OR='#f5a623', BL='#2f6cf0', GR='#2e9e4f', DK='#1a1a1a', GY='#999';
 
+/* ============================================================
+   TEKENINGEN (study mode)
+   ============================================================ */
+function diagSine(){
+  let s = `<svg viewBox="0 0 360 235" class="diag">`;
+  // hulplijnen top/dal
+  s += ln(45,40,335,40,'#e3e3e3',1) + ln(45,190,335,190,'#e3e3e3',1);
+  // assen
+  s += ar(45,215,45,18,GY,'mGray',1.6) + ar(35,115,350,115,GY,'mGray',1.6);
+  // sinus
+  s += `<path d="${sinePath(45,335,115,75,2,0)}" fill="none" stroke="${BL}" stroke-width="2.6"/>`;
+  // Ueff lijn
+  s += ln(45,62,330,62,GR,1.6,'5 4') + t(250,57,'Ueff ≈ 0,707·Um',{size:11,color:GR,weight:'bold'});
+  // Um dim
+  s += dim(95,114,95,41) + t(101,82,'Um',{size:12,weight:'bold'});
+  // Utt dim
+  s += dim(315,41,315,189) + t(321,120,'Utt',{size:12,weight:'bold'}) + t(297,205,'= 2·Um',{size:10,color:'#888'});
+  s += t(8,119,'0V',{size:11,color:'#888'}) + t(50,30,'U',{size:12,color:'#888'}) + t(338,130,'t',{size:12,color:'#888'});
+  s += `</svg>`;
+  return `<div class="studycard">
+    <div class="tagcat">Hoofdstuk 2 · wisselspanning</div>
+    <h3>Sinus: Um, Utt en Ueff</h3>
+    ${s}
+    <p><b>Um</b> = topwaarde (van 0V tot de top). <b>Utt</b> = piek-piekwaarde = van top tot dal = 2·Um.
+    <b>Ueff</b> = effectieve waarde = Um/√2 ≈ 0,707·Um (de "gewone" waarde, bv. 230 V).</p>
+    <div class="keyformula">Ueff = Um/√2 &nbsp;·&nbsp; Um = Ueff·√2 &nbsp;·&nbsp; Utt = 2·Um</div>
+  </div>`;
+}
+
+function waveRLC(phaseI, titleCol){
+  // u (oranje, fase 0) en i (blauw, faseI)
+  let s = `<svg viewBox="0 0 230 150" class="diag">`;
+  s += ar(20,135,20,12,GY,'mGray',1.4) + ar(12,75,222,75,GY,'mGray',1.4);
+  s += `<path d="${sinePath(20,212,75,46,2,0)}" fill="none" stroke="${OR}" stroke-width="2.4"/>`;
+  s += `<path d="${sinePath(20,212,75,30,2,phaseI)}" fill="none" stroke="${BL}" stroke-width="2.4"/>`;
+  s += legend(30,22,OR,'u') + legend(70,22,BL,'i');
+  s += `</svg>`;
+  return s;
+}
+function phasorBox(inner){ return `<svg viewBox="0 0 160 160" class="diag">${inner}</svg>`; }
+
+function diagR(){
+  const wave = waveRLC(0);
+  let ph = '';
+  ph += ar(25,72,140,72,OR,'mO',3) + t(128,66,'U',{size:13,color:OR,weight:'bold'});
+  ph += ar(25,90,118,90,BL,'mB',3) + t(122,95,'I',{size:13,color:BL,weight:'bold'});
+  ph += t(20,135,'φ = 0°  (zelfde richting)',{size:11,color:'#666'});
+  return `<div class="studycard">
+    <div class="tagcat">3.1.1 · ideale weerstand</div>
+    <h3>Weerstand R — u en i in fase</h3>
+    <div class="diagrow">
+      <div class="col">${wave}<div class="cap">u en i bereiken samen hun top</div></div>
+      <div class="col">${phasorBox(ph)}<div class="cap">vectordiagram (φ = 0°)</div></div>
+    </div>
+    <p>Bij een ideale weerstand zijn spanning en stroom <b>in fase</b>: ze gaan gelijk op, faseverschil 0°.</p>
+    <div class="keyformula">R = U<sub>R</sub> / I<sub>R</sub></div>
+  </div>`;
+}
+
+function diagL(){
+  const wave = waveRLC(-90); // stroom loopt na
+  let ph = '';
+  ph += ar(60,40,145,40,OR,'mO',3) + t(133,33,'U',{size:13,color:OR,weight:'bold'});
+  ph += ar(60,40,60,125,BL,'mB',3) + t(64,120,'I',{size:13,color:BL,weight:'bold'});
+  ph += arcPts(60,40,30,0,-90,DK,1.6) + t(92,72,'φ=90°',{size:11,weight:'bold'});
+  return `<div class="studycard">
+    <div class="tagcat">3.1.2 · ideale spoel</div>
+    <h3>Spoel L — stroom ijlt 90° NA</h3>
+    <div class="diagrow">
+      <div class="col">${wave}<div class="cap">i komt later dan u (naijlend)</div></div>
+      <div class="col">${phasorBox(ph)}<div class="cap">I staat 90° achter U</div></div>
+    </div>
+    <p>Bij een ideale spoel <b>naijlt</b> de stroom 90° op de spanning. Ezelsbrug: bij een spoe<b>L</b> <b>L</b>oopt de stroom achter.</p>
+    <div class="keyformula">X<sub>L</sub> = U<sub>L</sub>/I<sub>L</sub> = ω·L &nbsp;·&nbsp; ω = 2·π·f</div>
+  </div>`;
+}
+
+function diagC(){
+  const wave = waveRLC(90); // stroom loopt voor
+  let ph = '';
+  ph += ar(60,120,145,120,OR,'mO',3) + t(133,134,'U',{size:13,color:OR,weight:'bold'});
+  ph += ar(60,120,60,35,BL,'mB',3) + t(64,40,'I',{size:13,color:BL,weight:'bold'});
+  ph += arcPts(60,120,30,0,90,DK,1.6) + t(92,100,'φ=90°',{size:11,weight:'bold'});
+  return `<div class="studycard">
+    <div class="tagcat">3.1.3 · ideale condensator</div>
+    <h3>Condensator C — stroom ijlt 90° VOOR</h3>
+    <div class="diagrow">
+      <div class="col">${wave}<div class="cap">i komt eerder dan u (voorijlend)</div></div>
+      <div class="col">${phasorBox(ph)}<div class="cap">I staat 90° vóór U</div></div>
+    </div>
+    <p>Bij een ideale condensator <b>ijlt de stroom 90° vóór</b> op de spanning.</p>
+    <div class="keyformula">X<sub>C</sub> = U<sub>C</sub>/I<sub>C</sub> = 1/(ω·C) &nbsp;·&nbsp; ω = 2·π·f</div>
+  </div>`;
+}
+
+function diagRL(){
+  let s = `<svg viewBox="0 0 320 235" class="diag">`;
+  const Ox=40, Oy=185;
+  // UR
+  s += ar(Ox,Oy,200,Oy,OR,'mO',3) + t(95,205,'U_R = 80 V',{size:12,color:OR,weight:'bold'});
+  // UL
+  s += ar(200,Oy,200,65,BL,'mB',3) + t(206,128,'U_L = 60 V',{size:12,color:BL,weight:'bold'});
+  // U resultante
+  s += ar(Ox,Oy,200,65,GR,'mG',3.4) + t(58,108,'U = 100 V',{size:12,color:GR,weight:'bold'});
+  // rechte hoek
+  s += ln(188,Oy,188,Oy-12,'#777',1.4) + ln(188,Oy-12,200,Oy-12,'#777',1.4);
+  // phi
+  s += arcPts(Ox,Oy,40,0,36.9,DK,1.8) + t(86,176,'φ≈37°',{size:11,weight:'bold'});
+  s += `</svg>`;
+  return `<div class="studycard">
+    <div class="tagcat">3.x · RL-kring (vectordiagram)</div>
+    <h3>RL-kring — Pythagoras</h3>
+    ${s}
+    <p>Zet <b>U<sub>R</sub></b> horizontaal en <b>U<sub>L</sub></b> verticaal (90° erop). De totale spanning <b>U</b> is de
+    schuine zijde. Hoek <b>φ</b> ligt tussen U en U<sub>R</sub>.</p>
+    <div class="keyformula">U² = U<sub>R</sub>² + U<sub>L</sub>² &nbsp;→&nbsp; U = √(80²+60²) = <b>100 V</b></div>
+  </div>`;
+}
+
+function diagStar(){
+  const N={x:180,y:150};
+  function leg(deg){
+    return `<g transform="rotate(${deg} ${N.x} ${N.y})">
+      ${ln(N.x,N.y,N.x+30,N.y,DK,2)}
+      <rect x="${N.x+30}" y="${N.y-12}" width="50" height="24" rx="3" fill="#fff" stroke="${DK}" stroke-width="2"/>
+      ${ln(N.x+80,N.y,N.x+120,N.y,DK,2)}
+      ${dot(N.x+120,N.y,DK)}
+    </g>`;
+  }
+  let s = `<svg viewBox="0 0 360 270" class="diag">`;
+  s += leg(-90) + leg(30) + leg(150);
+  s += dot(N.x,N.y,DK,4.5) + t(190,146,'N (nul)',{size:11,color:'#444'});
+  // terminal labels
+  s += t(180,24,'L1',{size:12,weight:'bold',anchor:'middle'});
+  s += t(60,222,'L2',{size:12,weight:'bold',anchor:'middle'});
+  s += t(300,222,'L3',{size:12,weight:'bold',anchor:'middle'});
+  // Uf langs L1-been
+  s += dim(205,150,205,42) + t(210,98,'Uf',{size:12,weight:'bold',color:OR}) + t(210,114,'230 V',{size:10,color:'#888'});
+  // UL tussen L2 en L3
+  s += ln(76,210,76,242,'#bbb',1,'3 3') + ln(284,210,284,242,'#bbb',1,'3 3');
+  s += dim(76,242,284,242) + t(180,260,'UL = √3·Uf = 400 V',{size:12,weight:'bold',anchor:'middle',color:BL});
+  // IL = If
+  s += ar(168,70,168,46,GR,'mG',2.4) + t(112,64,'IL = If',{size:11,color:GR,weight:'bold'});
+  s += `</svg>`;
+  return `<div class="studycard">
+    <div class="tagcat">Driefasen · sterschakeling (Y)</div>
+    <h3>Sterschakeling</h3>
+    ${s}
+    <p>De drie wikkelingen komen samen in het <b>nulpunt N</b>. De fasespanning <b>Uf</b> staat over één wikkeling
+    (lijn → N). De lijnspanning <b>UL</b> staat tussen twee lijnen. Door de wikkeling en de lijn loopt dezelfde stroom.</p>
+    <div class="keyformula">UL = √3 · Uf &nbsp;&nbsp;|&nbsp;&nbsp; IL = If</div>
+  </div>`;
+}
+
+function diagDelta(){
+  const T={x:180,y:48}, BL2={x:70,y:205}, BR={x:290,y:205};
+  function coil(cx,cy,deg){ return `<g transform="rotate(${deg} ${cx} ${cy})"><rect x="${cx-23}" y="${cy-11}" width="46" height="22" rx="3" fill="#fff" stroke="${DK}" stroke-width="2"/></g>`; }
+  let s = `<svg viewBox="0 0 360 270" class="diag">`;
+  // driehoek (wikkelingen)
+  s += `<path d="M${T.x} ${T.y} L${BR.x} ${BR.y} L${BL2.x} ${BL2.y} Z" fill="none" stroke="${DK}" stroke-width="2"/>`;
+  // coils op de zijden
+  s += coil(180,205,0) + coil(125,126,-55.5) + coil(235,126,55.5);
+  // stubs naar lijnklemmen
+  s += ln(T.x,T.y,180,18,DK,2) + dot(180,18,DK) + t(180,13,'L1',{size:12,weight:'bold',anchor:'middle'});
+  s += ln(BL2.x,BL2.y,42,224,DK,2) + dot(42,224,DK) + t(34,235,'L2',{size:12,weight:'bold',anchor:'end'});
+  s += ln(BR.x,BR.y,318,224,DK,2) + dot(318,224,DK) + t(326,235,'L3',{size:12,weight:'bold'});
+  // Uf = UL op onderzijde
+  s += t(180,200,'Uf = UL',{size:12,weight:'bold',anchor:'middle',color:OR});
+  // If door wikkeling (rechterzijde)
+  s += ar(250,150,238,127,BL,'mB',2.4) + t(255,150,'If',{size:11,color:BL,weight:'bold'});
+  // IL op lijn L1
+  s += ar(180,40,180,22,GR,'mG',2.4) + t(186,34,'IL = √3·If',{size:11,color:GR,weight:'bold'});
+  s += `</svg>`;
+  return `<div class="studycard">
+    <div class="tagcat">Driefasen · driehoekschakeling (Δ)</div>
+    <h3>Driehoekschakeling</h3>
+    ${s}
+    <p>De wikkelingen vormen een <b>gesloten driehoek</b>, er is <b>geen nulpunt</b>. Elke wikkeling staat tussen twee
+    lijnen, dus de fasespanning is gelijk aan de lijnspanning. De lijnstroom splitst zich over twee wikkelingen.</p>
+    <div class="keyformula">UL = Uf &nbsp;&nbsp;|&nbsp;&nbsp; IL = √3 · If</div>
+  </div>`;
+}
+
+function diagPhasor3(){
+  const O={x:180,y:152}, R=95;
+  function tip(aDeg){ const a=aDeg*Math.PI/180; return {x:O.x+R*Math.cos(a), y:O.y-R*Math.sin(a)}; }
+  const p1=tip(90), p2=tip(210), p3=tip(330);
+  let s = `<svg viewBox="0 0 360 285" class="diag">`;
+  // buitenste driehoek = de drie lijnspanningen (licht)
+  s += `<path d="M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} L${p2.x.toFixed(1)} ${p2.y.toFixed(1)} L${p3.x.toFixed(1)} ${p3.y.toFixed(1)} Z" fill="none" stroke="#ccd3e0" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+  // fasevectoren
+  s += ar(O.x,O.y,p1.x,p1.y,BL,'mB',2.8) + t(p1.x+5,p1.y-3,'Uf1',{size:12,color:BL,weight:'bold'});
+  s += ar(O.x,O.y,p2.x,p2.y,BL,'mB',2.8) + t(p2.x-34,p2.y+14,'Uf2',{size:12,color:BL,weight:'bold'});
+  s += ar(O.x,O.y,p3.x,p3.y,BL,'mB',2.8) + t(p3.x+2,p3.y+14,'Uf3',{size:12,color:BL,weight:'bold'});
+  // lijnspanning UL12 = Uf1 - Uf2 (van tip2 naar tip1)
+  s += ar(p2.x,p2.y,p1.x,p1.y,OR,'mO',3.2);
+  s += t(70,108,'UL = Uf1 − Uf2',{size:12,color:OR,weight:'bold'}) + t(70,123,'= √3 · Uf',{size:12,color:OR,weight:'bold'});
+  // 120 graden
+  s += arcPts(O.x,O.y,34,90,210,DK,1.6) + t(120,150,'120°',{size:11,weight:'bold'});
+  s += dot(O.x,O.y,DK,4);
+  s += `</svg>`;
+  return `<div class="studycard">
+    <div class="tagcat">Driefasen · vectordiagram</div>
+    <h3>Lijnspanning vectorieel bepalen (ster)</h3>
+    ${s}
+    <p>De drie fasespanningen staan <b>120° uit fase</b>. De lijnspanning tussen L1 en L2 is het <b>vectorieel verschil</b>
+    Uf1 − Uf2 (oranje). Die pijl is precies <b>√3 keer</b> zo lang als een fasespanning. De drie lijnspanningen samen
+    vormen de buitenste driehoek (stippellijn).</p>
+    <div class="keyformula">UL = √3 · Uf &nbsp;(≈ 1,73 × zo groot)</div>
+  </div>`;
+}
+
+function buildStudy(){
+  return `<div class="studyhead">
+      <h2>📐 Tekeningen leren</h2>
+      <p>Bekijk en oefen alle tekeningen die je op de toets moet kunnen maken.</p>
+    </div>
+    ${diagSine()}${diagR()}${diagL()}${diagC()}${diagRL()}${diagStar()}${diagDelta()}${diagPhasor3()}`;
+}
+
+/* ============================================================
+   APP-LOGICA
+   ============================================================ */
+let state = { idx:0, answers:new Array(QUESTIONS.length).fill(null), startTime:null, timerInt:null, finished:false };
 const content = document.getElementById('content');
 const footer = document.getElementById('footer');
 const progressbar = document.getElementById('progressbar');
 const timerEl = document.getElementById('timer');
 
-function fmtTime(s) {
-  const m = Math.floor(s/60).toString().padStart(2,'0');
-  const ss = (s%60).toString().padStart(2,'0');
-  return m + ':' + ss;
-}
-function startTimer() {
-  state.startTime = Date.now();
-  state.timerInt = setInterval(() => {
-    const el = Math.floor((Date.now()-state.startTime)/1000);
-    timerEl.textContent = fmtTime(el);
-  }, 1000);
-}
-function stopTimer() { clearInterval(state.timerInt); }
-function elapsed() { return Math.floor((Date.now()-state.startTime)/1000); }
+function fmtTime(s){ const m=Math.floor(s/60).toString().padStart(2,'0'); const ss=(s%60).toString().padStart(2,'0'); return m+':'+ss; }
+function startTimer(){ state.startTime=Date.now(); state.timerInt=setInterval(()=>{ timerEl.textContent=fmtTime(Math.floor((Date.now()-state.startTime)/1000)); },1000); }
+function stopTimer(){ clearInterval(state.timerInt); }
+function elapsed(){ return Math.floor((Date.now()-state.startTime)/1000); }
 
-/* ---------- Start screen ---------- */
-function renderStart() {
-  progressbar.style.width = '0%';
-  timerEl.textContent = '00:00';
+function renderStart(){
+  stopTimer(); progressbar.style.width='0%'; timerEl.textContent='00:00';
   content.innerHTML = `
     <div class="hero">
       <div class="badge">OEFENEXAMEN</div>
       <h1>Wisselstroom &amp;<br>Driefasensystemen</h1>
-      <p>Test jezelf met ${QUESTIONS.length} meerkeuzevragen. Kies per vraag het juiste antwoord en bekijk meteen de uitleg.</p>
+      <p>Leer eerst de tekeningen, test jezelf daarna met ${QUESTIONS.length} meerkeuzevragen.</p>
       <div class="infogrid">
-        <div class="infocard"><div class="big">${QUESTIONS.length}</div><div class="lbl">vragen</div></div>
-        <div class="infocard"><div class="big">60%</div><div class="lbl">geslaagd vanaf</div></div>
+        <div class="infocard"><div class="big">${QUESTIONS.length}</div><div class="lbl">quizvragen</div></div>
+        <div class="infocard"><div class="big">8</div><div class="lbl">tekeningen</div></div>
       </div>
       <ul class="topiclist">
-        <li>✓ Frequentie, periode, top- en effectieve waarde</li>
-        <li>✓ Ideale weerstand, spoel en condensator</li>
-        <li>✓ Faseverschillen &amp; reactantie (XL, XC)</li>
-        <li>✓ RL-kring &amp; vectordiagram (Pythagoras)</li>
-        <li>✓ Ster- en driehoekschakeling (UL, Uf, IL, If)</li>
+        <li>✓ Sinus: Um, Utt, Ueff</li>
+        <li>✓ R, L, C: golfvorm &amp; vectordiagram</li>
+        <li>✓ RL-kring &amp; Pythagoras</li>
+        <li>✓ Ster- &amp; driehoekschakeling tekenen</li>
+        <li>✓ Lijnspanning vectorieel bepalen</li>
       </ul>
     </div>`;
-  footer.innerHTML = `<button class="btn btn-primary btn-full" onclick="beginExam()">Start examen ▸</button>`;
+  footer.innerHTML = `
+    <button class="btn btn-dark" onclick="renderStudy()">📐 Tekeningen</button>
+    <button class="btn btn-primary" onclick="beginExam()">Start examen ▸</button>`;
 }
 
-function beginExam() {
-  state.idx = 0;
-  state.answers = new Array(QUESTIONS.length).fill(null);
-  state.finished = false;
-  state.started = true;
-  startTimer();
-  renderQuestion();
+function renderStudy(){
+  stopTimer(); progressbar.style.width='100%'; timerEl.textContent='leren';
+  content.innerHTML = buildStudy();
+  footer.innerHTML = `
+    <button class="btn btn-ghost" onclick="renderStart()">◂ Terug</button>
+    <button class="btn btn-primary" onclick="beginExam()">Naar examen ▸</button>`;
+  window.scrollTo({top:0});
 }
 
-/* ---------- Question screen ---------- */
-function renderQuestion() {
-  const i = state.idx;
-  const Q = QUESTIONS[i];
-  const chosen = state.answers[i];
-  const answered = chosen !== null;
-  progressbar.style.width = ((i)/QUESTIONS.length*100) + '%';
+function beginExam(){
+  state.idx=0; state.answers=new Array(QUESTIONS.length).fill(null); state.finished=false;
+  startTimer(); renderQuestion(); window.scrollTo({top:0});
+}
 
-  let opts = Q.options.map((opt, k) => {
-    let cls = 'option';
-    if (answered) {
-      cls += ' disabled';
-      if (k === Q.answer) cls += ' correct';
-      else if (k === chosen) cls += ' wrong';
-    }
-    const letter = String.fromCharCode(65+k);
-    return `<div class="${cls}" onclick="choose(${k})">
-              <div class="letter">${letter}</div>
-              <div class="otext">${opt}</div>
-            </div>`;
+function renderQuestion(){
+  const i=state.idx, Q=QUESTIONS[i], chosen=state.answers[i], answered=chosen!==null;
+  progressbar.style.width=(i/QUESTIONS.length*100)+'%';
+  let opts = Q.options.map((opt,k)=>{
+    let cls='option';
+    if(answered){ cls+=' disabled'; if(k===Q.answer) cls+=' correct'; else if(k===chosen) cls+=' wrong'; }
+    return `<div class="${cls}" onclick="choose(${k})"><div class="letter">${String.fromCharCode(65+k)}</div><div>${opt}</div></div>`;
   }).join('');
-
   content.innerHTML = `
-    <div class="qmeta">
-      <span class="cat">${Q.cat}</span>
-      <span>Vraag ${i+1} / ${QUESTIONS.length}</span>
-    </div>
+    <div class="qmeta"><span class="cat">${Q.cat}</span><span>Vraag ${i+1} / ${QUESTIONS.length}</span></div>
     <p class="qtext">${Q.q}</p>
-    ${Q.formula ? `<div class="formula">${Q.formula}</div>` : ''}
+    ${Q.formula?`<div class="formula">${Q.formula}</div>`:''}
     <div class="options">${opts}</div>
-    <div class="explain ${answered ? 'show':''}" id="explain">
-      <b>${chosen===Q.answer ? '✓ Juist!' : (answered ? '✗ Fout.' : '')}</b>
-      ${Q.explain}
-    </div>`;
-
+    <div class="explain ${answered?'show':''}"><b>${answered?(chosen===Q.answer?'✓ Juist! ':'✗ Fout. '):''}</b>${Q.explain}</div>`;
   renderFooterQuestion();
 }
-
-function renderFooterQuestion() {
-  const i = state.idx;
-  const answered = state.answers[i] !== null;
-  const isLast = i === QUESTIONS.length - 1;
-  let html = '';
-  if (i > 0) html += `<button class="btn btn-ghost" onclick="prev()">◂</button>`;
-  if (isLast) {
-    html += `<button class="btn btn-dark" id="nextbtn" onclick="finish()" ${answered?'':'disabled'}>Resultaat ▸</button>`;
-  } else {
-    html += `<button class="btn btn-primary" id="nextbtn" onclick="next()" ${answered?'':'disabled'}>Volgende ▸</button>`;
-  }
+function renderFooterQuestion(){
+  const i=state.idx, answered=state.answers[i]!==null, isLast=i===QUESTIONS.length-1;
+  let html='';
+  if(i>0) html+=`<button class="btn btn-ghost" onclick="prev()">◂</button>`;
+  html += isLast
+    ? `<button class="btn btn-dark" onclick="finish()" ${answered?'':'disabled'}>Resultaat ▸</button>`
+    : `<button class="btn btn-primary" onclick="next()" ${answered?'':'disabled'}>Volgende ▸</button>`;
   footer.innerHTML = html;
 }
+function choose(k){ const i=state.idx; if(state.answers[i]!==null) return; state.answers[i]=k; renderQuestion(); }
+function next(){ if(state.idx<QUESTIONS.length-1){ state.idx++; renderQuestion(); window.scrollTo({top:0}); } }
+function prev(){ if(state.idx>0){ state.idx--; renderQuestion(); window.scrollTo({top:0}); } }
 
-function choose(k) {
-  const i = state.idx;
-  if (state.answers[i] !== null) return; // al beantwoord, niet meer wijzigen
-  state.answers[i] = k;
-  renderQuestion();
-}
-function next() { if (state.idx < QUESTIONS.length-1) { state.idx++; renderQuestion(); } }
-function prev() { if (state.idx > 0) { state.idx--; renderQuestion(); } }
-
-/* ---------- Result screen ---------- */
-function finish() {
-  stopTimer();
-  state.finished = true;
-  progressbar.style.width = '100%';
-  const total = QUESTIONS.length;
-  const correct = state.answers.reduce((acc, a, i) => acc + (a === QUESTIONS[i].answer ? 1 : 0), 0);
-  const pct = Math.round(correct/total*100);
-  const pass = pct >= 60;
-  const ringColor = pass ? 'var(--groen)' : 'var(--rood)';
-  const time = fmtTime(elapsed());
-
-  let reviews = QUESTIONS.map((Q, i) => {
-    const a = state.answers[i];
-    const ok = a === Q.answer;
-    const your = a===null ? '—' : `${String.fromCharCode(65+a)}) ${Q.options[a]}`;
+function finish(){
+  stopTimer(); state.finished=true; progressbar.style.width='100%';
+  const total=QUESTIONS.length;
+  const correct=state.answers.reduce((a,v,i)=>a+(v===QUESTIONS[i].answer?1:0),0);
+  const pct=Math.round(correct/total*100), pass=pct>=60;
+  const ringColor=pass?'var(--groen)':'var(--rood)', time=fmtTime(elapsed());
+  let reviews=QUESTIONS.map((Q,i)=>{
+    const a=state.answers[i], ok=a===Q.answer;
+    const your=a===null?'—':`${String.fromCharCode(65+a)}) ${Q.options[a]}`;
     return `<div class="reviewitem">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
         <span class="tag ${ok?'ok':'no'}">${ok?'JUIST':'FOUT'}</span>
-        <span style="font-size:12px;color:#aaa">Vraag ${i+1} · ${Q.cat}</span>
-      </div>
+        <span style="font-size:12px;color:#aaa">Vraag ${i+1} · ${Q.cat}</span></div>
       <div class="rq" style="margin-top:8px">${Q.q}</div>
-      ${ok ? '' : `<div class="ra">Jouw antwoord: ${your}</div>`}
+      ${ok?'':`<div class="ra">Jouw antwoord: ${your}</div>`}
       <div class="ra">Juist: <b>${String.fromCharCode(65+Q.answer)}) ${Q.options[Q.answer]}</b></div>
-      <div class="ra" style="color:#777;margin-top:4px">${Q.explain}</div>
-    </div>`;
+      <div class="ra" style="color:#777;margin-top:4px">${Q.explain}</div></div>`;
   }).join('');
-
   content.innerHTML = `
     <div class="result">
-      <div class="scorering" style="background:${ringColor}">
-        <div class="pct">${pct}%</div>
-        <div class="sub">${correct} / ${total} goed</div>
-      </div>
+      <div class="scorering" style="background:${ringColor}"><div class="pct">${pct}%</div><div class="sub">${correct} / ${total} goed</div></div>
       <div class="verdict ${pass?'pass':'fail'}">${pass?'✓ Geslaagd!':'✗ Nog niet geslaagd'}</div>
       <p style="color:#666;font-size:14px;margin:4px 0">Tijd: ${time} · grens: 60%</p>
-      <div class="reviewlist">
-        <h3 style="font-size:15px;margin:18px 0 10px">Overzicht antwoorden</h3>
-        ${reviews}
-      </div>
+      <div class="reviewlist"><h3 style="font-size:15px;margin:18px 0 10px">Overzicht antwoorden</h3>${reviews}</div>
     </div>`;
   footer.innerHTML = `
-    <button class="btn btn-ghost" onclick="scrollTo({top:0,behavior:'smooth'})">▲</button>
+    <button class="btn btn-ghost" onclick="renderStudy()">📐 Tekeningen</button>
     <button class="btn btn-primary" onclick="renderStart()">Opnieuw ▸</button>`;
+  window.scrollTo({top:0});
 }
 
-/* ---------- init ---------- */
 renderStart();
 </script>
 </body>
