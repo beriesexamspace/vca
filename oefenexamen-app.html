@@ -76,6 +76,8 @@
     display: inline-block; background: var(--grijs); border: 1px solid var(--rand);
     border-radius: 8px; padding: 6px 12px; font-style: italic; margin: 4px 0 14px; font-size: 15px;
   }
+  .quizdiag { border: 1px solid var(--rand); border-radius: 12px; padding: 8px; margin: 10px 0 14px; background: #fcfcff; }
+  .quizdiag .diag { margin: 0; border: none; background: transparent; }
   .options { display: flex; flex-direction: column; gap: 12px; }
   .option {
     display: flex; align-items: center; gap: 12px; border: 2px solid var(--rand);
@@ -234,7 +236,33 @@ const QUESTIONS = [
     explain:"Ster = sterpunt/nulpunt (N) waar de drie fasen samenkomen. Driehoek = wikkelingen in een gesloten lus, geen nulpunt." },
   { cat:"Examenvraag", q:"Een symmetrische sterbelasting op 3×400V+N heeft R = 40 Ω per fase. Hoe groot is de fasestroom If?",
     formula:"Uf = 400/√3 ≈ 231 V ;  If = Uf / R", options:["≈ 5,8 A","≈ 10 A","≈ 17,3 A"], answer:0,
-    explain:"Uf = 400/√3 ≈ 231 V, dus If = 231/40 ≈ 5,77 A. In ster is IL ook ≈ 5,77 A." }
+    explain:"Uf = 400/√3 ≈ 231 V, dus If = 231/40 ≈ 5,77 A. In ster is IL ook ≈ 5,77 A." },
+
+  /* ---- Tekening-herkenning ---- */
+  { cat:"Tekening herkennen", q:"Welke schakeling zie je in deze tekening?",
+    diagram:()=>svgStar({hideLabels:true}),
+    options:["Sterschakeling (Y)","Driehoekschakeling (Δ)","Geen van beide, dit is een enkelfasekring"], answer:0,
+    explain:"Je herkent de sterschakeling aan het gemeenschappelijke nulpunt N waar de drie wikkelingen samenkomen." },
+  { cat:"Tekening herkennen", q:"Welke schakeling zie je in deze tekening?",
+    diagram:()=>svgDelta({hideLabels:true}),
+    options:["Driehoekschakeling (Δ)","Sterschakeling (Y)","Geen van beide, dit is een enkelfasekring"], answer:0,
+    explain:"Je herkent de driehoekschakeling aan de gesloten driehoek van wikkelingen — er is geen nulpunt." },
+  { cat:"Tekening herkennen", q:"Dit zijn de drie fasespanningen Uf1, Uf2 en Uf3 van een sterschakeling. Hoeveel graden staan ze onderling uit fase?",
+    diagram:()=>svgPhasor3({hideLine:true}),
+    options:["120°","90°","60°"], answer:0,
+    explain:"In een symmetrisch driefasensysteem staan de drie fasespanningen altijd 120° uit fase met elkaar." },
+  { cat:"Tekening herkennen", q:"In dit diagram zie je de golfvormen van u en i. Welke component past hierbij?",
+    diagram:()=>svgL(),
+    options:["Een ideale spoel (L) — stroom ijlt 90° na","Een ideale condensator (C) — stroom ijlt 90° voor","Een ideale weerstand (R) — u en i in fase"], answer:0,
+    explain:"De stroom (blauw) komt later dan de spanning (oranje): dit is het naijlende gedrag van een ideale spoel." },
+  { cat:"Tekening herkennen", q:"In dit diagram zie je de golfvormen van u en i. Welke component past hierbij?",
+    diagram:()=>svgC(),
+    options:["Een ideale condensator (C) — stroom ijlt 90° voor","Een ideale spoel (L) — stroom ijlt 90° na","Een ideale weerstand (R) — u en i in fase"], answer:0,
+    explain:"De stroom (blauw) komt eerder dan de spanning (oranje): dit is het voorijlende gedrag van een ideale condensator." },
+  { cat:"Tekening herkennen", q:"In dit vectordiagram van een RL-kring: welke formule hoort hierbij?",
+    diagram:()=>svgRL(),
+    options:["U² = UR² + UL²","U = UR + UL","U² = UR² − UL²"], answer:0,
+    explain:"UR en UL staan loodrecht op elkaar; de resultante U volgt uit de stelling van Pythagoras: U² = UR² + UL²." }
 ];
 
 /* ============================================================
@@ -264,7 +292,7 @@ const OR='#f5a623', BL='#2f6cf0', GR='#2e9e4f', DK='#1a1a1a', GY='#999';
 /* ============================================================
    TEKENINGEN (study mode)
    ============================================================ */
-function diagSine(){
+function svgSine(){
   let s = `<svg viewBox="0 0 360 235" class="diag">`;
   // hulplijnen top/dal
   s += ln(45,40,335,40,'#e3e3e3',1) + ln(45,190,335,190,'#e3e3e3',1);
@@ -280,10 +308,13 @@ function diagSine(){
   s += dim(315,41,315,189) + t(321,120,'Utt',{size:12,weight:'bold'}) + t(297,205,'= 2·Um',{size:10,color:'#888'});
   s += t(8,119,'0V',{size:11,color:'#888'}) + t(50,30,'U',{size:12,color:'#888'}) + t(338,130,'t',{size:12,color:'#888'});
   s += `</svg>`;
+  return s;
+}
+function diagSine(){
   return `<div class="studycard">
     <div class="tagcat">Hoofdstuk 2 · wisselspanning</div>
     <h3>Sinus: Um, Utt en Ueff</h3>
-    ${s}
+    ${svgSine()}
     <p><b>Um</b> = topwaarde (van 0V tot de top). <b>Utt</b> = piek-piekwaarde = van top tot dal = 2·Um.
     <b>Ueff</b> = effectieve waarde = Um/√2 ≈ 0,707·Um (de "gewone" waarde, bv. 230 V).</p>
     <div class="keyformula">Ueff = Um/√2 &nbsp;·&nbsp; Um = Ueff·√2 &nbsp;·&nbsp; Utt = 2·Um</div>
@@ -302,61 +333,70 @@ function waveRLC(phaseI, titleCol){
 }
 function phasorBox(inner){ return `<svg viewBox="0 0 160 160" class="diag">${inner}</svg>`; }
 
-function diagR(){
+function svgR(){
   const wave = waveRLC(0);
   let ph = '';
   ph += ar(25,72,140,72,OR,'mO',3) + t(128,66,'U',{size:13,color:OR,weight:'bold'});
   ph += ar(25,90,118,90,BL,'mB',3) + t(122,95,'I',{size:13,color:BL,weight:'bold'});
   ph += t(20,135,'φ = 0°  (zelfde richting)',{size:11,color:'#666'});
+  return `<div class="diagrow">
+      <div class="col">${wave}<div class="cap">u en i bereiken samen hun top</div></div>
+      <div class="col">${phasorBox(ph)}<div class="cap">vectordiagram (φ = 0°)</div></div>
+    </div>`;
+}
+function diagR(){
   return `<div class="studycard">
     <div class="tagcat">3.1.1 · ideale weerstand</div>
     <h3>Weerstand R — u en i in fase</h3>
-    <div class="diagrow">
-      <div class="col">${wave}<div class="cap">u en i bereiken samen hun top</div></div>
-      <div class="col">${phasorBox(ph)}<div class="cap">vectordiagram (φ = 0°)</div></div>
-    </div>
+    ${svgR()}
     <p>Bij een ideale weerstand zijn spanning en stroom <b>in fase</b>: ze gaan gelijk op, faseverschil 0°.</p>
     <div class="keyformula">R = U<sub>R</sub> / I<sub>R</sub></div>
   </div>`;
 }
 
-function diagL(){
+function svgL(){
   const wave = waveRLC(-90); // stroom loopt na
   let ph = '';
   ph += ar(60,40,145,40,OR,'mO',3) + t(133,33,'U',{size:13,color:OR,weight:'bold'});
   ph += ar(60,40,60,125,BL,'mB',3) + t(64,120,'I',{size:13,color:BL,weight:'bold'});
   ph += arcPts(60,40,30,0,-90,DK,1.6) + t(92,72,'φ=90°',{size:11,weight:'bold'});
+  return `<div class="diagrow">
+      <div class="col">${wave}<div class="cap">i komt later dan u (naijlend)</div></div>
+      <div class="col">${phasorBox(ph)}<div class="cap">I staat 90° achter U</div></div>
+    </div>`;
+}
+function diagL(){
   return `<div class="studycard">
     <div class="tagcat">3.1.2 · ideale spoel</div>
     <h3>Spoel L — stroom ijlt 90° NA</h3>
-    <div class="diagrow">
-      <div class="col">${wave}<div class="cap">i komt later dan u (naijlend)</div></div>
-      <div class="col">${phasorBox(ph)}<div class="cap">I staat 90° achter U</div></div>
-    </div>
+    ${svgL()}
     <p>Bij een ideale spoel <b>naijlt</b> de stroom 90° op de spanning. Ezelsbrug: bij een spoe<b>L</b> <b>L</b>oopt de stroom achter.</p>
     <div class="keyformula">X<sub>L</sub> = U<sub>L</sub>/I<sub>L</sub> = ω·L &nbsp;·&nbsp; ω = 2·π·f</div>
   </div>`;
 }
 
-function diagC(){
+function svgC(){
   const wave = waveRLC(90); // stroom loopt voor
   let ph = '';
   ph += ar(60,120,145,120,OR,'mO',3) + t(133,134,'U',{size:13,color:OR,weight:'bold'});
   ph += ar(60,120,60,35,BL,'mB',3) + t(64,40,'I',{size:13,color:BL,weight:'bold'});
   ph += arcPts(60,120,30,0,90,DK,1.6) + t(92,100,'φ=90°',{size:11,weight:'bold'});
+  return `<div class="diagrow">
+      <div class="col">${wave}<div class="cap">i komt eerder dan u (voorijlend)</div></div>
+      <div class="col">${phasorBox(ph)}<div class="cap">I staat 90° vóór U</div></div>
+    </div>`;
+}
+function diagC(){
   return `<div class="studycard">
     <div class="tagcat">3.1.3 · ideale condensator</div>
     <h3>Condensator C — stroom ijlt 90° VOOR</h3>
-    <div class="diagrow">
-      <div class="col">${wave}<div class="cap">i komt eerder dan u (voorijlend)</div></div>
-      <div class="col">${phasorBox(ph)}<div class="cap">I staat 90° vóór U</div></div>
-    </div>
+    ${svgC()}
     <p>Bij een ideale condensator <b>ijlt de stroom 90° vóór</b> op de spanning.</p>
     <div class="keyformula">X<sub>C</sub> = U<sub>C</sub>/I<sub>C</sub> = 1/(ω·C) &nbsp;·&nbsp; ω = 2·π·f</div>
   </div>`;
 }
 
-function diagRL(){
+function svgRL(){
   let s = `<svg viewBox="0 0 320 235" class="diag">`;
   const Ox=40, Oy=185;
   // UR
@@ -370,17 +410,21 @@ function diagRL(){
   // phi
   s += arcPts(Ox,Oy,40,0,36.9,DK,1.8) + t(86,176,'φ≈37°',{size:11,weight:'bold'});
   s += `</svg>`;
+  return s;
+}
+function diagRL(){
   return `<div class="studycard">
     <div class="tagcat">3.x · RL-kring (vectordiagram)</div>
     <h3>RL-kring — Pythagoras</h3>
-    ${s}
+    ${svgRL()}
     <p>Zet <b>U<sub>R</sub></b> horizontaal en <b>U<sub>L</sub></b> verticaal (90° erop). De totale spanning <b>U</b> is de
     schuine zijde. Hoek <b>φ</b> ligt tussen U en U<sub>R</sub>.</p>
     <div class="keyformula">U² = U<sub>R</sub>² + U<sub>L</sub>² &nbsp;→&nbsp; U = √(80²+60²) = <b>100 V</b></div>
   </div>`;
 }
 
-function diagStar(){
+function svgStar(opts){
+  opts = opts || {};
   const N={x:180,y:150};
   function leg(deg){
     return `<g transform="rotate(${deg} ${N.x} ${N.y})">
@@ -392,30 +436,37 @@ function diagStar(){
   }
   let s = `<svg viewBox="0 0 360 270" class="diag">`;
   s += leg(-90) + leg(30) + leg(150);
-  s += dot(N.x,N.y,DK,4.5) + t(190,146,'N (nul)',{size:11,color:'#444'});
+  s += dot(N.x,N.y,DK,4.5);
+  if (!opts.hideLabels) s += t(190,146,'N (nul)',{size:11,color:'#444'});
   // terminal labels
   s += t(180,24,'L1',{size:12,weight:'bold',anchor:'middle'});
   s += t(60,222,'L2',{size:12,weight:'bold',anchor:'middle'});
   s += t(300,222,'L3',{size:12,weight:'bold',anchor:'middle'});
-  // Uf langs L1-been
-  s += dim(205,150,205,42) + t(210,98,'Uf',{size:12,weight:'bold',color:OR}) + t(210,114,'230 V',{size:10,color:'#888'});
-  // UL tussen L2 en L3
-  s += ln(76,210,76,242,'#bbb',1,'3 3') + ln(284,210,284,242,'#bbb',1,'3 3');
-  s += dim(76,242,284,242) + t(180,260,'UL = √3·Uf = 400 V',{size:12,weight:'bold',anchor:'middle',color:BL});
-  // IL = If
-  s += ar(168,70,168,46,GR,'mG',2.4) + t(112,64,'IL = If',{size:11,color:GR,weight:'bold'});
+  if (!opts.hideLabels) {
+    // Uf langs L1-been
+    s += dim(205,150,205,42) + t(210,98,'Uf',{size:12,weight:'bold',color:OR}) + t(210,114,'230 V',{size:10,color:'#888'});
+    // UL tussen L2 en L3
+    s += ln(76,210,76,242,'#bbb',1,'3 3') + ln(284,210,284,242,'#bbb',1,'3 3');
+    s += dim(76,242,284,242) + t(180,260,'UL = √3·Uf = 400 V',{size:12,weight:'bold',anchor:'middle',color:BL});
+    // IL = If
+    s += ar(168,70,168,46,GR,'mG',2.4) + t(112,64,'IL = If',{size:11,color:GR,weight:'bold'});
+  }
   s += `</svg>`;
+  return s;
+}
+function diagStar(){
   return `<div class="studycard">
     <div class="tagcat">Driefasen · sterschakeling (Y)</div>
     <h3>Sterschakeling</h3>
-    ${s}
+    ${svgStar()}
     <p>De drie wikkelingen komen samen in het <b>nulpunt N</b>. De fasespanning <b>Uf</b> staat over één wikkeling
     (lijn → N). De lijnspanning <b>UL</b> staat tussen twee lijnen. Door de wikkeling en de lijn loopt dezelfde stroom.</p>
     <div class="keyformula">UL = √3 · Uf &nbsp;&nbsp;|&nbsp;&nbsp; IL = If</div>
   </div>`;
 }
 
-function diagDelta(){
+function svgDelta(opts){
+  opts = opts || {};
   const T={x:180,y:48}, BL2={x:70,y:205}, BR={x:290,y:205};
   function coil(cx,cy,deg){ return `<g transform="rotate(${deg} ${cx} ${cy})"><rect x="${cx-23}" y="${cy-11}" width="46" height="22" rx="3" fill="#fff" stroke="${DK}" stroke-width="2"/></g>`; }
   let s = `<svg viewBox="0 0 360 270" class="diag">`;
@@ -427,24 +478,30 @@ function diagDelta(){
   s += ln(T.x,T.y,180,18,DK,2) + dot(180,18,DK) + t(180,13,'L1',{size:12,weight:'bold',anchor:'middle'});
   s += ln(BL2.x,BL2.y,42,224,DK,2) + dot(42,224,DK) + t(34,235,'L2',{size:12,weight:'bold',anchor:'end'});
   s += ln(BR.x,BR.y,318,224,DK,2) + dot(318,224,DK) + t(326,235,'L3',{size:12,weight:'bold'});
-  // Uf = UL op onderzijde
-  s += t(180,200,'Uf = UL',{size:12,weight:'bold',anchor:'middle',color:OR});
-  // If door wikkeling (rechterzijde)
-  s += ar(250,150,238,127,BL,'mB',2.4) + t(255,150,'If',{size:11,color:BL,weight:'bold'});
-  // IL op lijn L1
-  s += ar(180,40,180,22,GR,'mG',2.4) + t(186,34,'IL = √3·If',{size:11,color:GR,weight:'bold'});
+  if (!opts.hideLabels) {
+    // Uf = UL op onderzijde
+    s += t(180,200,'Uf = UL',{size:12,weight:'bold',anchor:'middle',color:OR});
+    // If door wikkeling (rechterzijde)
+    s += ar(250,150,238,127,BL,'mB',2.4) + t(255,150,'If',{size:11,color:BL,weight:'bold'});
+    // IL op lijn L1
+    s += ar(180,40,180,22,GR,'mG',2.4) + t(186,34,'IL = √3·If',{size:11,color:GR,weight:'bold'});
+  }
   s += `</svg>`;
+  return s;
+}
+function diagDelta(){
   return `<div class="studycard">
     <div class="tagcat">Driefasen · driehoekschakeling (Δ)</div>
     <h3>Driehoekschakeling</h3>
-    ${s}
+    ${svgDelta()}
     <p>De wikkelingen vormen een <b>gesloten driehoek</b>, er is <b>geen nulpunt</b>. Elke wikkeling staat tussen twee
     lijnen, dus de fasespanning is gelijk aan de lijnspanning. De lijnstroom splitst zich over twee wikkelingen.</p>
     <div class="keyformula">UL = Uf &nbsp;&nbsp;|&nbsp;&nbsp; IL = √3 · If</div>
   </div>`;
 }
 
-function diagPhasor3(){
+function svgPhasor3(opts){
+  opts = opts || {};
   const O={x:180,y:152}, R=95;
   function tip(aDeg){ const a=aDeg*Math.PI/180; return {x:O.x+R*Math.cos(a), y:O.y-R*Math.sin(a)}; }
   const p1=tip(90), p2=tip(210), p3=tip(330);
@@ -455,17 +512,22 @@ function diagPhasor3(){
   s += ar(O.x,O.y,p1.x,p1.y,BL,'mB',2.8) + t(p1.x+5,p1.y-3,'Uf1',{size:12,color:BL,weight:'bold'});
   s += ar(O.x,O.y,p2.x,p2.y,BL,'mB',2.8) + t(p2.x-34,p2.y+14,'Uf2',{size:12,color:BL,weight:'bold'});
   s += ar(O.x,O.y,p3.x,p3.y,BL,'mB',2.8) + t(p3.x+2,p3.y+14,'Uf3',{size:12,color:BL,weight:'bold'});
-  // lijnspanning UL12 = Uf1 - Uf2 (van tip2 naar tip1)
-  s += ar(p2.x,p2.y,p1.x,p1.y,OR,'mO',3.2);
-  s += t(70,108,'UL = Uf1 − Uf2',{size:12,color:OR,weight:'bold'}) + t(70,123,'= √3 · Uf',{size:12,color:OR,weight:'bold'});
+  if (!opts.hideLine) {
+    // lijnspanning UL12 = Uf1 - Uf2 (van tip2 naar tip1)
+    s += ar(p2.x,p2.y,p1.x,p1.y,OR,'mO',3.2);
+    s += t(70,108,'UL = Uf1 − Uf2',{size:12,color:OR,weight:'bold'}) + t(70,123,'= √3 · Uf',{size:12,color:OR,weight:'bold'});
+  }
   // 120 graden
   s += arcPts(O.x,O.y,34,90,210,DK,1.6) + t(120,150,'120°',{size:11,weight:'bold'});
   s += dot(O.x,O.y,DK,4);
   s += `</svg>`;
+  return s;
+}
+function diagPhasor3(){
   return `<div class="studycard">
     <div class="tagcat">Driefasen · vectordiagram</div>
     <h3>Lijnspanning vectorieel bepalen (ster)</h3>
-    ${s}
+    ${svgPhasor3()}
     <p>De drie fasespanningen staan <b>120° uit fase</b>. De lijnspanning tussen L1 en L2 is het <b>vectorieel verschil</b>
     Uf1 − Uf2 (oranje). Die pijl is precies <b>√3 keer</b> zo lang als een fasespanning. De drie lijnspanningen samen
     vormen de buitenste driehoek (stippellijn).</p>
@@ -544,6 +606,7 @@ function renderQuestion(){
   content.innerHTML = `
     <div class="qmeta"><span class="cat">${Q.cat}</span><span>Vraag ${i+1} / ${QUESTIONS.length}</span></div>
     <p class="qtext">${Q.q}</p>
+    ${Q.diagram?`<div class="quizdiag">${Q.diagram()}</div>`:''}
     ${Q.formula?`<div class="formula">${Q.formula}</div>`:''}
     <div class="options">${opts}</div>
     <div class="explain ${answered?'show':''}"><b>${answered?(chosen===Q.answer?'✓ Juist! ':'✗ Fout. '):''}</b>${Q.explain}</div>`;
