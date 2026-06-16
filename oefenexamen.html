@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Oefenexamen Wisselstroom &amp; Driefasensystemen</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1a1a1a;
+    font-size: 12.5px;
+    line-height: 1.45;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  header {
+    border-bottom: 4px solid #f5a623;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  header .title h1 {
+    font-size: 19px;
+    margin: 0 0 4px 0;
+    color: #1a1a1a;
+  }
+  header .title .sub {
+    font-size: 11px;
+    color: #555;
+  }
+  header .badge {
+    background: #f5a623;
+    color: #fff;
+    font-weight: bold;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .examinfo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #444;
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: #fafafa;
+  }
+  .section-title {
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin: 22px 0 12px 0;
+  }
+  .question {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  .question .qnum {
+    font-weight: bold;
+    color: #b35c00;
+  }
+  .question .points {
+    float: right;
+    font-size: 10.5px;
+    color: #888;
+    font-weight: normal;
+  }
+  .answer-space {
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    min-height: 28px;
+    margin-top: 6px;
+    background: #fcfcfc;
+  }
+  .answer-space.tall { min-height: 60px; }
+  .formula-box {
+    display: inline-block;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 4px 10px;
+    background: #f5f5f5;
+    font-style: italic;
+    margin: 4px 4px 4px 0;
+  }
+  .figure-note {
+    font-size: 10.5px;
+    color: #777;
+    font-style: italic;
+  }
+  .answers {
+    page-break-before: always;
+  }
+  .answers .section-title {
+    background: #2e6f2e;
+  }
+  .answers .qnum { color: #2e6f2e; }
+  .answers .question {
+    border-bottom: 1px solid #e4f0e4;
+  }
+  footer {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+  }
+  .checkbox-row {
+    margin: 4px 0;
+  }
+  .checkbox-row span {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 1px solid #888;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title">
+    <h1>Oefenexamen &mdash; Wisselstroom &amp; Driefasensystemen</h1>
+    <div class="sub">Elektrotechniek &middot; theorie &amp; berekening &middot; oefenversie</div>
+  </div>
+  <div class="badge">VCA-STIJL OEFENING</div>
+</header>
+
+<div class="examinfo">
+  <div>Naam: ____________________</div>
+  <div>Datum: ____________________</div>
+  <div>Tijdsduur: 60 min</div>
+  <div>Punten: 100</div>
+</div>
+
+<div class="section-title">Deel 1 &mdash; Basisbegrippen wisselspanning (20 pt)</div>
+
+<div class="question">
+  <span class="qnum">1.1</span><span class="points">4 pt</span>
+  Een sinusvormige spanning heeft een frequentie van 50 Hz.<br>
+  a) Bereken de periode T.<br>
+  b) Leg in eigen woorden uit wat "frequentie" betekent.
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">1.2</span><span class="points">6 pt</span>
+  De topwaarde van een spanning is U<sub>m</sub> = 325 V.<br>
+  a) Bereken de piek-piekwaarde U<sub>tt</sub>.<br>
+  b) Bereken de effectieve waarde U<sub>eff</sub>.
+  <div class="formula-box">U<sub>eff</sub> = U<sub>m</sub> / &radic;2</div>
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">1.3</span><span class="points">4 pt</span>
+  Een wisselspanning heeft U<sub>eff</sub> = 230 V. Bereken U<sub>m</sub> en U<sub>tt</sub>.
+  <div class="answer-space"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">1.4</span><span class="points">6 pt</span>
+  Teken een sinusvormig signaal en geef hierin aan: U<sub>m</sub>, U<sub>tt</sub> en de 0V-lijn.
+  <span class="figure-note">(zoals figuur 2.2 uit het lesboek)</span>
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="section-title">Deel 2 &mdash; Ideale weerstand, spoel en condensator (24 pt)</div>
+
+<div class="question">
+  <span class="qnum">2.1</span><span class="points">6 pt</span>
+  Een ideale weerstand R = 100 &Omega; staat op een net van U<sub>eff</sub> = 230 V.<br>
+  a) Bereken I<sub>eff</sub>.<br>
+  b) Wat is het faseverschil tussen U en I?
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">2.2</span><span class="points">6 pt</span>
+  Een ideale spoel L = 0,2 H wordt aangesloten op f = 50 Hz.<br>
+  a) Bereken X<sub>L</sub>.<br>
+  b) Loopt de stroom voor of na op de spanning? Hoeveel graden?
+  <div class="formula-box">X<sub>L</sub> = &omega;&middot;L &nbsp;&nbsp; &omega; = 2&pi;f</div>
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">2.3</span><span class="points">6 pt</span>
+  Een ideale condensator C = 50 &micro;F wordt aangesloten op f = 50 Hz.<br>
+  a) Bereken X<sub>C</sub>.<br>
+  b) Loopt de stroom voor of na op de spanning? Hoeveel graden?
+  <div class="formula-box">X<sub>C</sub> = 1 / (&omega;&middot;C)</div>
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">2.4</span><span class="points">6 pt</span>
+  Teken voor R, L en C elk een vectordiagram met U en I, en geef de hoek &phi; aan.
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="section-title">Deel 3 &mdash; RL-kring, vectordiagram en Pythagoras (16 pt)</div>
+
+<div class="question">
+  <span class="qnum">3.1</span><span class="points">6 pt</span>
+  Gegeven: U<sub>R</sub> = 80 V, U<sub>L</sub> = 60 V.<br>
+  a) Bereken U.<br>
+  b) Bereken de hoek &phi; tussen U en U<sub>R</sub>.
+  <div class="formula-box">U&sup2; = U<sub>R</sub>&sup2; + U<sub>L</sub>&sup2;</div>
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">3.2</span><span class="points">4 pt</span>
+  Gegeven: U = 230 V, U<sub>R</sub> = 150 V. Bereken U<sub>L</sub>.
+  <div class="answer-space"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">3.3</span><span class="points">6 pt</span>
+  Teken het vectordiagram van een RL-kring: U<sub>R</sub> horizontaal, U<sub>L</sub> verticaal, U als resultante met hoek &phi;.
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="section-title">Deel 4 &mdash; Driefasensystemen: ster &amp; driehoek (28 pt)</div>
+
+<div class="question">
+  <span class="qnum">4.1</span><span class="points">6 pt</span>
+  Een symmetrisch driefasensysteem heeft een fasespanning U<sub>f</sub> = 230 V.<br>
+  a) Bereken de lijnspanning U<sub>L</sub>.<br>
+  b) Is dit een ster- of driehoekschakeling? Waaraan zie je dat?
+  <div class="formula-box">U<sub>L</sub> = &radic;3 &times; U<sub>f</sub> &nbsp;(ster)</div>
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">4.2</span><span class="points">4 pt</span>
+  Een driefasensysteem heeft U<sub>L</sub> = 400 V. Bereken U<sub>f</sub>.
+  <div class="answer-space"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">4.3</span><span class="points">8 pt</span>
+  Teken een sterschakeling (L1, L2, L3, N) en een driehoekschakeling (L1, L2, L3).<br>
+  a) Geef in beide aan welke spanning de lijnspanning is en welke de fasespanning.<br>
+  b) Schrijf bij elke schakeling de formules voor U<sub>L</sub>/U<sub>f</sub> en I<sub>L</sub>/I<sub>f</sub>.
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">4.4</span><span class="points">6 pt</span>
+  Teken het vectordiagram van een sterschakeling met de drie fasespanningen (120&deg; uit fase) en construeer hieruit vectorieel de lijnspanning U<sub>L(1,2)</sub> tussen L1 en L2.
+  <span class="figure-note">(zoals in je schrift: gelijkbenige driehoek tussen de fasevectoren)</span>
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">4.5</span><span class="points">4 pt</span>
+  Een driefasenmotor (sterschakeling) heeft een fasestroom I<sub>f</sub> = 10 A. Bereken I<sub>L</sub>.
+  <div class="answer-space"></div>
+</div>
+
+<div class="section-title">Deel 5 &mdash; Examenstijl combinatievragen (12 pt)</div>
+
+<div class="question">
+  <span class="qnum">5.1</span><span class="points">6 pt</span>
+  Een net van 3 &times; 400 V + N voedt een symmetrische sterbelasting met R = 40 &Omega; per fase.<br>
+  a) Bereken de fasespanning.<br>
+  b) Bereken I<sub>f</sub> en I<sub>L</sub>.
+  <div class="answer-space tall"></div>
+</div>
+
+<div class="question">
+  <span class="qnum">5.2</span><span class="points">6 pt</span>
+  Leg uit wat er gebeurt met de lijnspanning en lijnstroom als je van een sterschakeling overschakelt naar een driehoekschakeling, bij gelijke fasespanning en fasestroom.
+  <div class="answer-space tall"></div>
+</div>
+
+<footer>Oefenexamen samengesteld op basis van eigen lesaantekeningen &middot; alleen voor persoonlijk gebruik</footer>
+
+<!-- ===================== ANTWOORDEN ===================== -->
+<div class="answers">
+<div class="section-title">Antwoordenblad</div>
+
+<div class="question"><span class="qnum">1.1</span> a) T = 1/f = 1/50 = 0,02 s = 20 ms. b) Frequentie is hoeveel periodes er per seconde voorkomen.</div>
+<div class="question"><span class="qnum">1.2</span> a) U<sub>tt</sub> = 2&times;U<sub>m</sub> = 650 V. b) U<sub>eff</sub> = 325/&radic;2 &asymp; 230 V.</div>
+<div class="question"><span class="qnum">1.3</span> U<sub>m</sub> = 230&times;&radic;2 &asymp; 325 V; U<sub>tt</sub> &asymp; 650 V.</div>
+<div class="question"><span class="qnum">1.4</span> Sinus met top op U<sub>m</sub>, dal op &minus;U<sub>m</sub>, afstand top-dal = U<sub>tt</sub>.</div>
+
+<div class="question"><span class="qnum">2.1</span> a) I<sub>eff</sub> = 230/100 = 2,3 A. b) 0&deg;, in fase.</div>
+<div class="question"><span class="qnum">2.2</span> a) X<sub>L</sub> = 2&pi;&middot;50&middot;0,2 &asymp; 62,8 &Omega;. b) stroom 90&deg; na (achter) op spanning.</div>
+<div class="question"><span class="qnum">2.3</span> a) X<sub>C</sub> = 1/(2&pi;&middot;50&middot;50&times;10&#8315;&sup6;) &asymp; 63,7 &Omega;. b) stroom 90&deg; voor op spanning.</div>
+<div class="question"><span class="qnum">2.4</span> R: U en I in fase. L: I 90&deg; na op U. C: I 90&deg; voor op U.</div>
+
+<div class="question"><span class="qnum">3.1</span> a) U = &radic;(80&sup2;+60&sup2;) = &radic;10000 = 100 V. b) &phi; = arctan(60/80) &asymp; 36,9&deg;.</div>
+<div class="question"><span class="qnum">3.2</span> U<sub>L</sub> = &radic;(230&sup2;&minus;150&sup2;) = &radic;30400 &asymp; 174,4 V.</div>
+<div class="question"><span class="qnum">3.3</span> Rechthoekige driehoek: U<sub>R</sub> langs basis, U<sub>L</sub> loodrecht omhoog, U als schuine zijde.</div>
+
+<div class="question"><span class="qnum">4.1</span> a) U<sub>L</sub> = &radic;3&times;230 &asymp; 398,4 V (&asymp;400 V). b) Sterschakeling, want U<sub>L</sub> = &radic;3&times;U<sub>f</sub>.</div>
+<div class="question"><span class="qnum">4.2</span> U<sub>f</sub> = 400/&radic;3 &asymp; 230,9 V.</div>
+<div class="question"><span class="qnum">4.3</span> Ster: N aanwezig, U<sub>L</sub>=&radic;3&times;U<sub>f</sub>, I<sub>L</sub>=I<sub>f</sub>. Driehoek: geen N, U<sub>L</sub>=U<sub>f</sub>, I<sub>L</sub>=&radic;3&times;I<sub>f</sub>.</div>
+<div class="question"><span class="qnum">4.4</span> Drie vectoren 120&deg; uit elkaar; U<sub>L(1,2)</sub> is het vectorieel verschil van U<sub>f1</sub> en U<sub>f2</sub>, gevonden via een gelijkbenige driehoek (basishoeken 60&deg;).</div>
+<div class="question"><span class="qnum">4.5</span> I<sub>L</sub> = I<sub>f</sub> = 10 A (ster: lijnstroom = fasestroom).</div>
+
+<div class="question"><span class="qnum">5.1</span> a) U<sub>f</sub> = 400/&radic;3 &asymp; 230,9 V. b) I<sub>f</sub> = 230,9/40 &asymp; 5,77 A; I<sub>L</sub> = I<sub>f</sub> &asymp; 5,77 A.</div>
+<div class="question"><span class="qnum">5.2</span> Bij gelijke U<sub>f</sub> en I<sub>f</sub>: in driehoek wordt U<sub>L</sub> = U<sub>f</sub> (dus lager dan in ster) en I<sub>L</sub> = &radic;3&times;I<sub>f</sub> (dus hoger dan in ster). De rollen van U<sub>L</sub>/I<sub>L</sub> wisselen tussen ster en driehoek.</div>
+
+</div>
+</body>
+</html>
