@@ -216,7 +216,7 @@ window.VCA_SUMMARY = [{"cat":"Veiligheid Algemeen","items":["VCA = Veiligheid, g
         return '<button class="chip'+(sel.cats[c]?" on":"")+'" data-c="'+esc(c)+'">'+esc(c)+' ('+n+')</button>';}).join("")+'</div>'+
       '<label class="fld">Aantal vragen</label>'+
       '<div class="chips" id="cnt">'+[10,20,30,999].map(function(n){return '<button class="chip'+(sel.count===n?" on":"")+'" data-n="'+n+'">'+(n===999?"Alle":n)+'</button>';}).join("")+'</div>'+
-      '<label class="fld"><input type="checkbox" id="shuf" '+(sel.shuffle?"checked":"")+'> Willekeurige volgorde</label>'+
+      '<label class="fld">'+"Volgorde van de vragen"+'</label><div class="chips" id="ord">'+'<button class="chip'+(sel.shuffle?" on":"")+'" data-sh="1">'+"Door elkaar"+'</button>'+'<button class="chip'+(sel.shuffle?"":" on")+'" data-sh="0">'+"Op volgorde"+'</button>'+'</div>'+
       '<div class="row" style="margin-top:18px"><button class="btn" id="start">Start oefenen →</button><span class="muted" id="poolN"></span></div></div>';
     app.innerHTML=html;
     function pool(){ var cs=Object.keys(sel.cats).filter(function(k){return sel.cats[k];}); return D.filter(function(q){return cs.length?cs.indexOf(q.categorie)>=0:false;}); }
@@ -225,7 +225,7 @@ window.VCA_SUMMARY = [{"cat":"Veiligheid Algemeen","items":["VCA = Veiligheid, g
     document.getElementById("allCh").onclick=function(){cats.forEach(function(c){sel.cats[c]=true;});renderOefenGate();};
     document.getElementById("noCh").onclick=function(){sel.cats={};renderOefenGate();};
     [].slice.call(document.querySelectorAll("#cnt .chip")).forEach(function(b){b.onclick=function(){sel.count=+b.dataset.n;renderOefenGate();};});
-    document.getElementById("shuf").onchange=function(e){sel.shuffle=e.target.checked;};
+    [].slice.call(document.querySelectorAll("#ord .chip")).forEach(function(b){ b.onclick=function(){ sel.shuffle=b.dataset.sh==="1"; [].slice.call(document.querySelectorAll("#ord .chip")).forEach(function(x){x.classList.toggle("on",x===b);}); }; });
     document.getElementById("start").onclick=function(){var p=pool();if(sel.shuffle)p=shuffle(p);if(sel.count<p.length)p=p.slice(0,sel.count);startRun("oefen",p,"Oefenen");};
     refr();
   }
